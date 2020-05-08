@@ -1,0 +1,4 @@
+smhnaqvi.ir database connection information
+database: marketma_mahalemarket
+username: marketma_root
+password: Gbvp!ageMWfs
