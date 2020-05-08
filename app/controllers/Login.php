@@ -5,7 +5,11 @@ class Login extends MY_Controller
 {
     public function index()
     {
-        $this->load->view("login");
+        if (isset($_SESSION["user_info"])){
+            redirect(base_url("panel"));
+        }else{
+            $this->load->view("login");
+        }
     }
 
     function checkUser()
