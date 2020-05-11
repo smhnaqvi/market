@@ -7,6 +7,7 @@ class API extends My_Controller
     public function __construct()
     {
         parent::__construct();
+        header('Access-Control-Allow-Origin: *');
     }
 
     function response(bool $success, array $error = null, array $data = null)

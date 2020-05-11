@@ -19,6 +19,7 @@ class Category_model extends CI_Model
     function getCategories($where = null)
     {
         if (isset($where)) $this->db->where($where);
+        $this->db->order_by("id", "DESC");
         return $this->db->get($this->table)->result();
     }
 
@@ -62,6 +63,7 @@ class Category_model extends CI_Model
     public function getSubCategories($catId)
     {
         $this->db->where("category_id", $catId);
+        $this->db->order_by("id", "DESC");
         return $this->db->get($this->tableSub)->result();
     }
 
