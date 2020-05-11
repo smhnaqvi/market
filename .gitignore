@@ -20,3 +20,4 @@ vendor/*
 /upload
 /app/config/database.php
 /app/config/config.php
+index.php
