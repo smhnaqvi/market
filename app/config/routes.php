@@ -1,5 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+require_once "routes_api.php";
 
 $route['default_controller'] = 'Login';
 $route['login'] = 'Login';
@@ -9,12 +10,12 @@ $route['login'] = 'Login';
 $route['home'] = 'Page/index';
 $route['markets'] = 'Page/markets';
 $route['categories'] = 'Page/categories';
-$route['basket'] = 'Page/basket';
+$route['basket'] = 'Basket/index';
 $route['page/about'] = 'Page/about';
 $route['page/contact'] = 'Page/contact';
 $route['page/product/(:num)'] = 'Page/product/$1';
 
-$route['market/(:num)/products'] = 'Market/products/$1';
+$route['market/(:num)'] = 'Market/products/$1';
 $route['market/(:num)/category'] = 'Market/category/$1';
 
 
@@ -37,6 +38,9 @@ $route['panel/logout'] = 'Login/logout';
 /** product */
 $route['panel/product/manage'] = 'Panel/Product/index';
 $route['panel/product/add-new']['POST'] = 'Panel/Product/store';
+$route['panel/product/(:num)/edit'] = 'Panel/Product/editProduct/$1';
+$route['panel/product/update']["POST"] = 'Panel/Product/update';
+$route['panel/product/delete/(:num)']["GET"] = 'Panel/Product/delete/$1';
 
 /** market */
 $route['panel/market/manage'] = 'Panel/Market/index';

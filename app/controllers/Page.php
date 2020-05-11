@@ -26,16 +26,13 @@ class Page extends Main
 
     public function markets()
     {
-        $this->template(new ViewResponse("enduser", "Pages/markets", "", ""));
+        $this->load->model("Market_model");
+        $markets = $this->Market_model->getMarkets(["is_active" => 1]);
+        $this->template(new ViewResponse("enduser", "Pages/markets", "فروشگاه ها", ["markets" => $markets]));
     }
 
     public function categories()
     {
-        $this->template(new ViewResponse("enduser", "Pages/categories", "", ""));
     }
 
-    public function basket()
-    {
-        $this->template(new ViewResponse("enduser", "Pages/basket", "", ""));
-    }
 }

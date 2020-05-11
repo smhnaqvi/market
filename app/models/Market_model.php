@@ -2,7 +2,7 @@
 
 class Market_model extends CI_Model
 {
-    protected $table = "market";
+    public $table = "market";
 
     function __construct()
     {
@@ -15,8 +15,9 @@ class Market_model extends CI_Model
         return ($result->num_rows() === 1) ? $result->result() : [];
     }
 
-    function getMarkets()
+    function getMarkets(array $where = null)
     {
+        if (isset($where)) $this->db->where($where);
         return $this->db->get($this->table)->result();
     }
 

@@ -21,6 +21,19 @@ class Product extends Main
         $this->template($data);
     }
 
+    public function editProduct($id = null)
+    {
+        if (!isset($id)) $this->redirectBackward();
+        $product = $this->Product_model->getProduct($id);
+        if (empty($product)) $this->redirectBackward();
+        $product = $product[0];
+
+        $this->load->model("Category_model");
+        $categories = $this->Category_model->getCategories();
+
+        $this->template(new ViewResponse("panel", "edit_products", "ویرایش محصول ($product->name)", ["product" => $product, "categories" => $categories]));
+    }
+
     public function store()
     {
 
@@ -54,7 +67,7 @@ class Product extends Main
         );
         $insertingResult = $this->Product_model->newProduct($data);
         if ($insertingResult === false) {
-            $this->session->set_flashdata("error", "حطایی در اینجاد محصول بوجود آمده است");
+            $this->session->set_flashdata("error", "خطایی در اینجاد محصول بوجود آمده است");
         } else {
             $this->load->model("Product_Category_model");
             $category_id = $this->input->post("category_id", true);
@@ -73,36 +86,70 @@ class Product extends Main
     public function update()
     {
         /** TODO update product */
-        $this->form_validation->set_rules("id", '', "required");
+
+
+        $this->form_validation->set_rules("id", '', "required|integer");
         $this->form_validation->set_rules("name", '', "required");
-        $this->form_validation->set_rules("sell_type", '', "required");
-        $this->form_validation->set_rules("price", '', "required");
-        $this->form_validation->set_rules("cover", '', "required");
+        $this->form_validation->set_rules("category_id", '', "required|integer");
+        $this->form_validation->set_rules("subcategory_id", '', "required|integer");
         if ($this->form_validation->run() === false) {
-            return $this->redirectBackward();
-        }
-
-        $id = $this->input->post("id", true);
-        $data["name"] = $this->input->post("name", true);
-        $data["sell_type"] = $this->input->post("sell_type", true);
-        $data["cover"] = $this->input->post("cover", true);
-
-        $this->Product_model->updateProduct($id, $data);
-
-        $price = $this->input->post("price", true);
-        $this->Product_Price_model->updatePrice($id, $price);
-
-        return $this->redirectBackward();
-    }
-
-    public function delete()
-    {
-        $id = $this->input->get("id", true);
-        if (!isset($id)) {
+            $this->session->set_flashdata("form_error", validation_errors());
             $this->redirectBackward();
         }
 
-        $this->Category_model->removeCategory($id);
+        $fileInput = "cover";
+        $productCover = null;
+        /** if product new cover is exist we should upload that cover */
+        if (isset($_FILES["$fileInput"]) and !empty($_FILES["$fileInput"]["name"]) and $_FILES["$fileInput"]["error"] === 0) {
+            $productCover = $this->uploadImage($fileInput, "products");
+            if ($productCover === false) {
+                $this->session->set_flashdata("form_error", "خطایی در آپلود عکس بوجود آمده است");
+                $this->redirectBackward();
+            }
+        }
+
+        $id = $this->input->post("id", true);
+        $data = array(
+            "name" => $this->input->post("name", true),
+            "description" => $this->input->post("description", true),
+        );
+
+        /** if product cove is changed update cover name on the database */
+        if (isset($productCover)) {
+            $data["cover"] = $productCover;
+            $fileName = $this->Product_model->getProductCover($id);
+            $removing = $this->Upload_model->removeCover($fileName, "products");
+            if (!$removing) {
+                $this->session->set_flashdata("error", "خطایی در حذف عکس بوجود آمده است");
+                return $this->redirectBackward();
+            }
+
+        }
+
+        $updatingResult = $this->Product_model->updateProduct($id, $data);
+        if ($updatingResult === false) {
+            $this->session->set_flashdata("error", "خطایی در ویرایش محصول بوجود آمده است");
+        } else {
+            $this->load->model("Product_Category_model");
+            $category_id = $this->input->post("category_id", true);
+            $subcategory_id = $this->input->post("subcategory_id", true);
+
+            $this->Product_Category_model->replace(array(
+                "product_id" => $id,
+                "category_id" => $category_id,
+                "subcategory_id" => $subcategory_id,
+            ));
+            $this->session->set_flashdata("success", "محصول با موفقیت بروزرسانی شد.");
+        }
+        return $this->redirectBackward();
+    }
+
+    public function delete($id = null)
+    {
+        if (!isset($id)) {
+            $this->redirectBackward();
+        }
+        $this->Product_model->delete($id);
         $this->redirectBackward();
     }
 

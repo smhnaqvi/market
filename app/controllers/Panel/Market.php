@@ -70,6 +70,7 @@ class Market extends Main
 
         $this->form_validation->set_rules("product_id", '', "required|integer");
         $this->form_validation->set_rules("product_price", '', "required|integer");
+        $this->form_validation->set_rules("product_sell_price", '', "required|integer");
         if ($this->form_validation->run() === false) {
             $this->session->set_flashdata("form_error", validation_errors());
             $this->redirectBackward();
@@ -77,8 +78,9 @@ class Market extends Main
 
         $product_id = $this->input->post("product_id", true);
         $product_price = $this->input->post("product_price", true);
+        $product_sell_price = $this->input->post("product_sell_price", true);
         $this->load->model("Product_Price_model");
-        $insertingResult = $this->Product_Price_model->setNewPrice($product_id, $id, $product_price);
+        $insertingResult = $this->Product_Price_model->setNewPrice($product_id, $id, $product_price, $product_sell_price);
         if ($insertingResult === false) {
             $this->session->set_flashdata("error", "خطایی در اینجاد محصول بوجود آمده است");
         } else {

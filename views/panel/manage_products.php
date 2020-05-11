@@ -62,15 +62,16 @@
                     <th scope="row"><?= $i + 1 ?></th>
                     <td><?= $item->name ?></td>
                     <td><?= $item->created_at ?></td>
-                    <td><img class="img-fluid img-thumbnail rounded cover" style="height: 50px" src="<?= base_url('upload/products/') . $item->cover ?>" alt="<?= $item->name ?>"></td>
+                    <td><img class="img-fluid img-thumbnail rounded cover" style="height: 50px"
+                             src="<?= base_url('upload/products/') . $item->cover ?>" alt="<?= $item->name ?>"></td>
                     <td>
                         <div class="dropdown show text-left">
                             <i class="fal fa-ellipsis-v text-success pl-2 pr-2" style="font-size: 25px;cursor: pointer"
                                data-toggle="dropdown" aria-haspopup="true"
                                aria-expanded="false"></i>
                             <div class="dropdown-menu text-center">
-                                <a class="dropdown-item" href="#">ویرایش</a>
-                                <a class="dropdown-item" href="#">حذف</a>
+                                <a class="dropdown-item" href="<?= base_url("panel/product/{$item->id}/edit") ?>">ویرایش</a>
+                                <a class="dropdown-item" href="<?= base_url("panel/product/delete/{$item->id}") ?>">حذف</a>
                             </div>
                         </div>
                     </td>
@@ -80,4 +81,4 @@
         </table>
     </div>
 </div>
-<script type="application/javascript" src="<?=base_url("assets/js/manage_products.js")?>"></script>
+<script type="application/javascript" src="<?= base_url("assets/js/manage_products.js") ?>"></script>

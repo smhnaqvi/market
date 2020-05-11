@@ -2,8 +2,8 @@
 
 class Product_Price_model extends CI_Model
 {
-    protected $mainTable = "products";
-    protected $table = "product_price";
+    public $mainTable = "products";
+    public $table = "product_price";
 
     function __construct()
     {
@@ -22,16 +22,17 @@ class Product_Price_model extends CI_Model
             ->from($this->mainTable)
             ->join($this->table, "$this->table.product_id = $this->mainTable.id");
         $this->db->where("$this->table.market_id", $marketId);
-        $this->db->order_by("$this->table.id", "DESC");
+        $this->db->order_by("$this->table.updated_at", "DESC");
         return $this->db->get()->result();
     }
 
-    function setNewPrice($productId, $marketId, $price)
+    function setNewPrice($productId, $marketId, $price, $sell_price)
     {
         $this->db->insert($this->table, array(
             "product_id" => $productId,
             "market_id" => $marketId,
             "price" => $price,
+            "sell_price" => $sell_price,
             "updated_at" => date("Y-m-d H:i:s"),
         ));
     }

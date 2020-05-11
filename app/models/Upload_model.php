@@ -32,4 +32,9 @@ class Upload_model extends CI_Model
         /** Check error upload */
         return false;
     }
+
+    public function removeCover($fileName, $from)
+    {
+        return unlink("upload/$from/$fileName");
+    }
 }

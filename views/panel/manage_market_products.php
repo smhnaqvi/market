@@ -20,9 +20,16 @@
             </div>
             <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroup-sizing-sm">قیمت محصول</span>
+                    <span class="input-group-text" id="inputGroup-sizing-sm">قیمت مغازه</span>
                 </div>
-                <input required type="text" class="form-control" name="product_price" aria-label="قیمت محصول"
+                <input required type="text" class="form-control" name="product_price" aria-label="قیمت مغازه"
+                       aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroup-sizing-sm">قیمت فروش</span>
+                </div>
+                <input required type="text" class="form-control" name="product_sell_price" aria-label="قیمت فروش"
                        aria-describedby="inputGroup-sizing-sm">
             </div>
             <?php if (isset($_SESSION["form_error"])) { ?>

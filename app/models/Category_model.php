@@ -1,9 +1,15 @@
 <?php
 
+
+/**
+ * @property Product_Price_model $Product_Price_model
+ * @property Product_Category_model $Product_Category_model
+ */
+
 class Category_model extends CI_Model
 {
-    protected $table = "category";
-    protected $tableSub = "subCategories";
+    public $table = "category";
+    public $tableSub = "subCategories";
 
     function __construct()
     {
@@ -70,5 +76,19 @@ class Category_model extends CI_Model
         $this->db->where("id", $id);
         $this->db->set($data);
         $this->db->update($this->tableSub);
+    }
+
+    public function getMarketCategories($market_id)
+    {
+        $this->load->model("Product_Category_model");
+        $this->load->model("Product_Price_model");
+        $product_price_table = $this->Product_Price_model->table;
+        $product_category_table = $this->Product_Category_model->table;
+        return $this->db->select("$this->table.*")->distinct()
+            ->from($product_price_table)
+            ->join($product_category_table, "$product_category_table.product_id = $product_price_table.product_id")
+            ->join($this->table, "$this->table.id = $product_category_table.category_id")
+            ->where("market_id", $market_id)
+            ->get()->result();
     }
 }
