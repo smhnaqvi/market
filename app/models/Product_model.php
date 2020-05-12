@@ -18,8 +18,9 @@ class Product_model extends CI_Model
     function getProducts()
     {
         $this->db->where("is_active", 1);
-        $this->db->order_by("id","DESC");
+        $this->db->order_by("id", "DESC");
         return $this->db->get($this->table)->result();
+
     }
 
     function getProductsByIds(array $ids)

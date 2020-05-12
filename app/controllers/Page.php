@@ -1,8 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-require_once "Main.php";
 
-class Page extends Main
+class Page extends My_Controller
 {
     public function index()
     {
@@ -24,11 +23,11 @@ class Page extends Main
         $this->template(new ViewResponse("enduser", "Pages/product", "", ""));
     }
 
-    public function markets()
+    public function products()
     {
-        $this->load->model("Market_model");
-        $markets = $this->Market_model->getMarkets(["is_active" => 1]);
-        $this->template(new ViewResponse("enduser", "Pages/markets", "فروشگاه ها", ["markets" => $markets]));
+        $this->load->model("Product_Price_model");
+        $products = $this->Product_Price_model->getProductsByPrice();
+        $this->template(new ViewResponse("enduser", "Pages/products", "محصولات", ["products" => $products]));
     }
 
     public function categories()

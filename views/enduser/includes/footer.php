@@ -28,7 +28,7 @@
             </a>
         </li>
         <li>
-            <a href="<?=base_url('/markets')?>">
+            <a href="<?=base_url('/products')?>">
                 <span class="fal fa-store"></span>
                 <span>سوپر مارکت</span>
             </a>

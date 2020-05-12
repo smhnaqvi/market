@@ -17,6 +17,4 @@ class Basket extends My_Controller
         $count = $this->cart->total();
         $this->template(new ViewResponse("enduser", "Pages/basket", "سبد خرید", ["basket" => $basket]));
     }
-
-
 }

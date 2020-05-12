@@ -22,8 +22,34 @@ class Product_Price_model extends CI_Model
             ->from($this->mainTable)
             ->join($this->table, "$this->table.product_id = $this->mainTable.id");
         $this->db->where("$this->table.market_id", $marketId);
+        $this->db->where("$this->mainTable.is_active", 1);
+        $this->db->where("$this->mainTable.is_deleted", 0);
         $this->db->order_by("$this->table.updated_at", "DESC");
-        return $this->db->get()->result();
+        $data = [];
+        foreach ($this->db->get()->result() as $market_product) {
+            if (!isset($data[$market_product->product_id])) {
+                $data[$market_product->product_id] = $market_product;
+            }
+        }
+        return $data;
+    }
+
+    function getProductsByPrice()
+    {
+        $this->db->select()
+            ->from($this->mainTable)
+            ->join($this->table, "$this->table.product_id = $this->mainTable.id");
+        $this->db->where("$this->mainTable.is_active", 1);
+        $this->db->where("$this->mainTable.is_deleted", 0);
+        $this->db->order_by("$this->table.updated_at", "DESC");
+
+        $data = [];
+        foreach ($this->db->get()->result() as $market_product) {
+            if (!isset($data[$market_product->product_id])) {
+                $data[$market_product->product_id] = $market_product;
+            }
+        }
+        return $data;
     }
 
     function setNewPrice($productId, $marketId, $price, $sell_price)
