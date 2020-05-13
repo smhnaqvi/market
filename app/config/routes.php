@@ -29,6 +29,7 @@ $route['panel/category/(:num)/manage-subcategories']["GET"] = 'Panel/Category/in
 $route['panel/category/(:num)/add-new-subcategory']["POST"] = 'Panel/Category/storeSubCategory/$1';
 $route['panel/category/(:num)/update-subcategory']["GET"] = 'Panel/Category/updateSubCategory/$1';
 $route['panel/category/(:num)/delete-subcategory']["GET"] = 'Panel/Category/deleteSubCategory/$1';
+$route['panel/category/(:num)/subcategory-products']["GET"] = 'Panel/Category/productsSubCategory/$1';
 
 
 $route['panel'] = 'Panel/Main/index';
@@ -53,9 +54,6 @@ $route['panel/market/(:num)/add-product'] = 'Panel/Market/assignProduct/$1';
 
 /** order */
 $route['panel/order/manage'] = 'Panel/Order/index';
-
-
-
 
 
 /** api */

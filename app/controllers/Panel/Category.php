@@ -97,6 +97,18 @@ class Category extends Main
         $this->redirectBackward();
     }
 
+    public function productsSubCategory($id = null)
+    {
+        if (!isset($id)) {
+            $this->redirectBackward();
+        }
+        $search = $this->input->get("search", true);
+        $this->load->model("Product_model");
+
+        $products = $this->Product_model->getSubCategoryProducts($id, $search);
+        $this->template(new ViewResponse("panel", 'sub_category_products', 'محصولات', ["products" => $products]));
+    }
+
     public function apiGetSubCategory()
     {
         $category_id = $this->input->get("category_id");

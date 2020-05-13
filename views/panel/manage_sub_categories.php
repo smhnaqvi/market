@@ -32,6 +32,10 @@
                                aria-expanded="false"></i>
                             <div class="dropdown-menu text-center">
                                 <!--<a class="dropdown-item" href="base_url("panel/category/$item->id/update-subcategory")">ویرایش</a>-->
+                                <a class="dropdown-item" href="<?= base_url("panel/category/$item->id/subcategory-products") ?>">محصولات</a>
+                            </div>
+                            <div class="dropdown-menu text-center">
+                                <!--<a class="dropdown-item" href="base_url("panel/category/$item->id/update-subcategory")">ویرایش</a>-->
                                 <a class="dropdown-item" href="<?= base_url("panel/category/$item->id/delete-subcategory") ?>">حذف</a>
                             </div>
                         </div>

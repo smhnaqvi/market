@@ -15,9 +15,10 @@ class Product_model extends CI_Model
         parent::__construct();
     }
 
-    function getProducts()
+    function getProducts($search = null)
     {
         $this->db->where("is_active", 1);
+        $this->db->like("name", $search);
         $this->db->order_by("id", "DESC");
         return $this->db->get($this->table)->result();
 
@@ -80,5 +81,20 @@ class Product_model extends CI_Model
             "is_deleted" => 1,
             "is_active" => 0,
         ));
+    }
+
+    public function totalCount()
+    {
+        return $this->db->where(["is_active" => 1, "is_deleted" => 0])->get($this->table)->num_rows();
+    }
+
+    public function getSubCategoryProducts($id, $search = null)
+    {
+        $this->db->select()
+            ->from($this->table)
+            ->join("product_category", "product_category.product_id = $this->table.id")
+            ->where("product_category.subcategory_id", $id);
+        $this->db->like("$this->table.name", $search);
+        return $this->db->get()->result();
     }
 }

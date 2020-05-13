@@ -46,6 +46,17 @@
         </form>
     </div>
     <div class="col-md-8 col-sm-12">
+        <div class="search-box">
+            <form action="" method="GET">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" name="search" placeholder="جستحو کن..." aria-label=""
+                           aria-describedby="basic-addon1" value="<?= (isset($_GET["search"]) ? $_GET["search"] : null)?>">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-success" type="submit"><i class="fal fa-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
         <table class="table text-right" style="direction: rtl">
             <thead class="thead-dark">
             <tr>
@@ -70,8 +81,10 @@
                                data-toggle="dropdown" aria-haspopup="true"
                                aria-expanded="false"></i>
                             <div class="dropdown-menu text-center">
-                                <a class="dropdown-item" href="<?= base_url("panel/product/{$item->id}/edit") ?>">ویرایش</a>
-                                <a class="dropdown-item" href="<?= base_url("panel/product/delete/{$item->id}") ?>">حذف</a>
+                                <a class="dropdown-item"
+                                   href="<?= base_url("panel/product/{$item->id}/edit") ?>">ویرایش</a>
+                                <a class="dropdown-item"
+                                   href="<?= base_url("panel/product/delete/{$item->id}") ?>">حذف</a>
                             </div>
                         </div>
                     </td>

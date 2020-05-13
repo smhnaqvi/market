@@ -16,7 +16,8 @@ class Product extends Main
     {
         $this->load->model("Category_model");
         $categories = $this->Category_model->getCategories();
-        $products = $this->Product_model->getProducts();
+        $search = $this->input->get("search");
+        $products = $this->Product_model->getProducts($search);
         $data = new ViewResponse("panel", "manage_products", 'مدیریت محصولات ها', ["products" => $products, "categories" => $categories]);
         $this->template($data);
     }
