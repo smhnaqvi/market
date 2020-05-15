@@ -96,7 +96,8 @@
                 </tbody>
             </table>
         <?php else: ?>
-            <div style="font-size: 14pt" class="alert alert-warning d-flex justify-content-center align-items-center" role="alert">
+            <div style="font-size: 14pt" class="alert alert-warning d-flex justify-content-center align-items-center"
+                 role="alert">
                 نتیجه ای یافت نشد <i style="font-size: 20pt; padding: 0 10px 0 0" class="fal fa-frown text-danger"></i>
             </div>
         <?php endif; ?>
@@ -111,8 +112,12 @@
                             <span class="sr-only">Previous</span>
                         </a>
                     </li>
-                    <?php for ($i = 0, $page = 1; $i < (int)$content["products"]["pagination"]->allPages; $i++, $page++): ?>
-                        <li class="page-item <?= ((int)$_GET["page"] === $page) ? 'active' : null; ?>">
+                    <?php for ($i = 0, $page = (int)$content["products"]["pagination"]->currentPage;
+                               $i < (int)$content["products"]["pagination"]->ResultCountPerPage;
+                               $i++, $page++):
+                        $disable = ($page > (int)$content["products"]["pagination"]->allPages) ? 'disabled' : null;
+                        ?>
+                        <li class="page-item <?= $disable ?> <?= ((int)$_GET["page"] === $page) ? 'active' : null; ?>">
                             <a class="page-link"
                                href="<?= current_url() . "?page=$page" ?>"><?= $page ?></a>
                         </li>

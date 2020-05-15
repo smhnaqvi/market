@@ -18,9 +18,10 @@ class Product_model extends CI_Model
     public function pagination($num_rows)
     {
         $showingCount = $this->input->get("show_count");
-        if (!isset($showingCount)) $showingCount = 5;
+        if (!isset($showingCount)) $showingCount = 10;
 
         $prePage = $this->input->get('page');
+        if (!isset($prePage)) $prePage = 1;
         if (isset($prePage) && $prePage != 0) {
             $offset = abs(((($prePage - 1) * $showingCount) + 1 - 1));
         } else {
