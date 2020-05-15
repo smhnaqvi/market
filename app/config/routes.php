@@ -2,14 +2,15 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 require_once "routes_api.php";
 
-$route['default_controller'] = 'Page/index';
+$route['default_controller'] = 'Page/products';
 $route['login'] = 'Login';
-
 
 /** pages */
 $route['home'] = 'Page/index';
 $route['products'] = 'Page/products';
 $route['categories'] = 'Page/categories';
+$route['category/(:num)'] = 'Page/category/$1';
+$route['scp/(:num)'] = 'Page/subCategoryProducts/$1';
 $route['basket'] = 'Basket/index';
 $route['page/about'] = 'Page/about';
 $route['page/contact'] = 'Page/contact';

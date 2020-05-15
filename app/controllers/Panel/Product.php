@@ -10,6 +10,7 @@ class Product extends Main
     {
         parent::__construct();
         $this->load->model("Product_model");
+
     }
 
     public function index()
@@ -17,7 +18,14 @@ class Product extends Main
         $this->load->model("Category_model");
         $categories = $this->Category_model->getCategories();
         $search = $this->input->get("search");
+        $this->load->model("Product_model");
+        $this->load->model("Product_Price_model");
         $products = $this->Product_model->getProducts($search);
+        if (!empty($products)) {
+            foreach ($products["products"] as &$product) {
+                $product->sell_price = $this->Product_Price_model->getLastPrice($product->product_id);
+            }
+        }
         $data = new ViewResponse("panel", "manage_products", 'مدیریت محصولات ها', ["products" => $products, "categories" => $categories]);
         $this->template($data);
     }

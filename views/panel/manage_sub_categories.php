@@ -12,37 +12,47 @@
         </form>
     </div>
     <div class="col-md-8 col-sm-12">
-        <table class="table text-right" style="direction: rtl">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">عنوان فارسی</th>
-                <th scope="col"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($content["categories"] as $i => $item) { ?>
+        <?php if (!empty($content["categories"])) : ?>
+            <table class="table text-right" style="direction: rtl">
+                <thead class="thead-dark">
                 <tr>
-                    <th scope="row"><?= $i + 1 ?></th>
-                    <td><?= $item->title ?></td>
-                    <td>
-                        <div class="dropdown show text-left">
-                            <i class="fal fa-ellipsis-v text-success pl-2 pr-2" style="font-size: 25px;cursor: pointer"
-                               data-toggle="dropdown" aria-haspopup="true"
-                               aria-expanded="false"></i>
-                            <div class="dropdown-menu text-center">
-                                <!--<a class="dropdown-item" href="base_url("panel/category/$item->id/update-subcategory")">ویرایش</a>-->
-                                <a class="dropdown-item" href="<?= base_url("panel/category/$item->id/subcategory-products") ?>">محصولات</a>
-                            </div>
-                            <div class="dropdown-menu text-center">
-                                <!--<a class="dropdown-item" href="base_url("panel/category/$item->id/update-subcategory")">ویرایش</a>-->
-                                <a class="dropdown-item" href="<?= base_url("panel/category/$item->id/delete-subcategory") ?>">حذف</a>
-                            </div>
-                        </div>
-                    </td>
+                    <th scope="col">#</th>
+                    <th scope="col">عنوان فارسی</th>
+                    <th scope="col"></th>
                 </tr>
-            <?php } ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <?php foreach ($content["categories"] as $i => $item) { ?>
+                    <tr>
+                        <th scope="row"><?= $i + 1 ?></th>
+                        <td><?= $item->title ?></td>
+                        <td>
+                            <div class="dropdown show text-left">
+                                <i class="fal fa-ellipsis-v text-success pl-2 pr-2"
+                                   style="font-size: 25px;cursor: pointer"
+                                   data-toggle="dropdown" aria-haspopup="true"
+                                   aria-expanded="false"></i>
+                                <div class="dropdown-menu text-center">
+                                    <!--<a class="dropdown-item" href="base_url("panel/category/$item->id/update-subcategory")">ویرایش</a>-->
+                                    <a class="dropdown-item"
+                                       href="<?= base_url("panel/category/$item->id/subcategory-products") ?>">محصولات</a>
+                                </div>
+                                <div class="dropdown-menu text-center">
+                                    <!--<a class="dropdown-item" href="base_url("panel/category/$item->id/update-subcategory")">ویرایش</a>-->
+                                    <a class="dropdown-item"
+                                       href="<?= base_url("panel/category/$item->id/delete-subcategory") ?>">حذف</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                <?php } ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <div style="font-size: 14pt" class="alert alert-warning d-flex justify-content-center align-items-center"
+                 role="alert">
+                هیچ زیر دسته ثبت نشده <i style="font-size: 20pt; padding: 0 10px 0 0" class="fal fa-frown text-danger"></i>
+            </div>
+        <?php endif; ?>
     </div>
 </div>

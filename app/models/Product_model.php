@@ -15,13 +15,83 @@ class Product_model extends CI_Model
         parent::__construct();
     }
 
-    function getProducts($search = null)
+    public function pagination($num_rows)
     {
-        $this->db->where("is_active", 1);
-        $this->db->like("name", $search);
-        $this->db->order_by("id", "DESC");
-        return $this->db->get($this->table)->result();
+        $showingCount = $this->input->get("show_count");
+        if (!isset($showingCount)) $showingCount = 5;
 
+        $prePage = $this->input->get('page');
+        if (isset($prePage) && $prePage != 0) {
+            $offset = abs(((($prePage - 1) * $showingCount) + 1 - 1));
+        } else {
+            $prePage = 1;
+            $offset = 0;
+        }
+
+        $pagination = new stdClass();
+        $pagination->totalResultCount = $num_rows;
+        $pagination->currentPage = ($prePage === 0) ? 1 : $prePage;
+        $pagination->allPages = ceil($num_rows / $showingCount);
+        $pagination->offset = $offset;
+        $pagination->ResultCountPerPage = $showingCount;
+        $pagination->status = ($pagination->currentPage <= $pagination->allPages);
+        $pagination->hasPagination = ($num_rows > $showingCount);
+        return $pagination;
+    }
+
+
+    function getProductsQuery(array $config)
+    {
+        $this->db->select("name,cover,user_id,$this->table.id as product_id,created_at");
+
+        if (isset($config["subCategoryId"], $config["categoryId"]) OR isset($config["categoryId"])) {
+            $condition = "AND category_id = {$config["categoryId"]}";
+        } elseif (isset($config["subCategoryId"])) {
+            $condition = "AND subcategory_id = {$config["subCategoryId"]}";
+        } else {
+            $condition = "";
+        }
+
+        if (isset($config["subCategoryId"]) OR isset($config["categoryId"])) {
+            $this->db->join("product_category", "product_category.product_id = $this->table.id $condition");
+        }
+
+        $this->db->where("is_active", 1);
+        $this->db->like("name", $config["search"]);
+        if (isset($config["sort"])) $this->db->order_by("created_at", $config["sort"]);
+        return $this->db->get($this->table, $config["limit"], $config["offset"]);
+    }
+
+    function getProducts($searchText = null, $sort = null, $categoryID = null, $subCategoryID = null)
+    {
+
+        $totalResult = $this->getProductsQuery([
+            "limit" => null,
+            "offset" => null,
+            "search" => $searchText,
+            "sort" => $sort,
+            "categoryId" => $categoryID,
+            "subCategoryId" => $subCategoryID,
+        ])->num_rows();
+
+        $paginate = $this->pagination($totalResult);
+        $data = [];
+        if ($paginate->status === false) return $data;
+
+        $products = $this->getProductsQuery([
+            "limit" => $paginate->ResultCountPerPage,
+            "offset" => $paginate->offset,
+            "search" => $searchText,
+            "sort" => $sort,
+            "categoryId" => $categoryID,
+            "subCategoryId" => $subCategoryID,
+        ])->result();
+
+        foreach ($products as $product) {
+            $product->cover = base_url("upload/products/") . $product->cover;
+            $product->cover_exact = $product->cover;
+        }
+        return ["products" => $products, "pagination" => $paginate];
     }
 
     function getProductsByIds(array $ids)

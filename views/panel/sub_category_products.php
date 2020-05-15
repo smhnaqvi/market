@@ -37,9 +37,9 @@
                                aria-expanded="false"></i>
                             <div class="dropdown-menu text-center">
                                 <a class="dropdown-item"
-                                   href="<?= base_url("panel/product/{$item->id}/edit") ?>">ویرایش</a>
+                                   href="<?= base_url("panel/product/{$item->product_id}/edit") ?>">ویرایش</a>
                                 <a class="dropdown-item"
-                                   href="<?= base_url("panel/product/delete/{$item->id}") ?>">حذف</a>
+                                   href="<?= base_url("panel/product/delete/{$item->product_id}") ?>">حذف</a>
                             </div>
                         </div>
                     </td>

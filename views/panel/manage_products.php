@@ -50,48 +50,84 @@
             <form action="" method="GET">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" name="search" placeholder="جستحو کن..." aria-label=""
-                           aria-describedby="basic-addon1" value="<?= (isset($_GET["search"]) ? $_GET["search"] : null)?>">
+                           aria-describedby="basic-addon1"
+                           value="<?= (isset($_GET["search"]) ? $_GET["search"] : null) ?>">
                     <div class="input-group-prepend">
                         <button class="btn btn-success" type="submit"><i class="fal fa-search"></i></button>
                     </div>
                 </div>
             </form>
         </div>
-        <table class="table text-right" style="direction: rtl">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">نام محصول</th>
-                <th scope="col">تاریخ ثبت</th>
-                <th scope="col">عکس</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php foreach ($content["products"] as $i => $item) { ?>
+        <?php if (isset($content["products"]["products"])) : ?>
+            <table class="table text-right" style="direction: rtl">
+                <thead class="thead-dark">
                 <tr>
-                    <th scope="row"><?= $i + 1 ?></th>
-                    <td><?= $item->name ?></td>
-                    <td><?= $item->created_at ?></td>
-                    <td><img class="img-fluid img-thumbnail rounded cover" style="height: 50px"
-                             src="<?= base_url('upload/products/') . $item->cover ?>" alt="<?= $item->name ?>"></td>
-                    <td>
-                        <div class="dropdown show text-left">
-                            <i class="fal fa-ellipsis-v text-success pl-2 pr-2" style="font-size: 25px;cursor: pointer"
-                               data-toggle="dropdown" aria-haspopup="true"
-                               aria-expanded="false"></i>
-                            <div class="dropdown-menu text-center">
-                                <a class="dropdown-item"
-                                   href="<?= base_url("panel/product/{$item->id}/edit") ?>">ویرایش</a>
-                                <a class="dropdown-item"
-                                   href="<?= base_url("panel/product/delete/{$item->id}") ?>">حذف</a>
-                            </div>
-                        </div>
-                    </td>
+                    <th scope="col">#</th>
+                    <th scope="col">نام محصول</th>
+                    <th scope="col">تاریخ ثبت</th>
+                    <th scope="col">عکس</th>
+                    <th></th>
                 </tr>
-            <?php } ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                <?php foreach ($content["products"]["products"] as $i => $item) : ?>
+                    <tr>
+                        <th scope="row"><?= $i + 1 ?></th>
+                        <td><?= $item->name ?></td>
+                        <td><?= $item->created_at ?></td>
+                        <td><img class="img-fluid img-thumbnail rounded cover" style="height: 50px"
+                                 src="<?= $item->cover ?>" alt="<?= $item->name ?>"></td>
+                        <td>
+                            <div class="dropdown show text-left">
+                                <i class="fal fa-ellipsis-v text-success pl-2 pr-2"
+                                   style="font-size: 25px;cursor: pointer"
+                                   data-toggle="dropdown" aria-haspopup="true"
+                                   aria-expanded="false"></i>
+                                <div class="dropdown-menu text-center">
+                                    <a class="dropdown-item"
+                                       href="<?= base_url("panel/product/{$item->product_id}/edit") ?>">ویرایش</a>
+                                    <a class="dropdown-item"
+                                       href="<?= base_url("panel/product/delete/{$item->product_id}") ?>">حذف</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php else: ?>
+            <div style="font-size: 14pt" class="alert alert-warning d-flex justify-content-center align-items-center" role="alert">
+                نتیجه ای یافت نشد <i style="font-size: 20pt; padding: 0 10px 0 0" class="fal fa-frown text-danger"></i>
+            </div>
+        <?php endif; ?>
+        <?php if (isset($content["products"]["pagination"]) and $content["products"]["pagination"]->allPages > 1): ?>
+            <nav style="direction: ltr" aria-label="Page navigation example">
+                <ul class="pagination justify-content-center pagination-md">
+                    <li class="page-item <?php echo (isset($_GET["page"]) and $_GET["page"] === '1') ? "disabled" : null; ?>">
+                        <a class="page-link"
+                           href="<?php echo (isset($_GET["page"])) ? current_url() . '?page=' . ($_GET["page"] - 1) : '#' ?>"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                            <span class="sr-only">Previous</span>
+                        </a>
+                    </li>
+                    <?php for ($i = 0, $page = 1; $i < (int)$content["products"]["pagination"]->allPages; $i++, $page++): ?>
+                        <li class="page-item <?= ((int)$_GET["page"] === $page) ? 'active' : null; ?>">
+                            <a class="page-link"
+                               href="<?= current_url() . "?page=$page" ?>"><?= $page ?></a>
+                        </li>
+                    <?php endfor; ?>
+                    <li class="page-item <?php echo (isset($_GET["page"]) and (int)$_GET["page"] === (int)$content["products"]["pagination"]->allPages) ? "disabled" : null; ?>">
+                        <a class="page-link"
+                           href="<?php echo (isset($_GET["page"])) ? current_url() . '?page=' . ($_GET["page"] + 1) : '#' ?>"
+                           aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                            <span class="sr-only">Next</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        <?php endif; ?>
     </div>
 </div>
 <script type="application/javascript" src="<?= base_url("assets/js/manage_products.js") ?>"></script>
