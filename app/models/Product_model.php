@@ -18,10 +18,10 @@ class Product_model extends CI_Model
     public function pagination($num_rows)
     {
         $showingCount = $this->input->get("show_count");
-        if (!isset($showingCount)) $showingCount = 10;
+        if (!isset($showingCount)) $showingCount = 8;
 
         $prePage = $this->input->get('page');
-        if (!isset($prePage)) $prePage = 1;
+        if (!isset($prePage)) $_GET["page"] = 1;
         if (isset($prePage) && $prePage != 0) {
             $offset = abs(((($prePage - 1) * $showingCount) + 1 - 1));
         } else {
@@ -63,25 +63,27 @@ class Product_model extends CI_Model
         return $this->db->get($this->table, $config["limit"], $config["offset"]);
     }
 
-    function getProducts($searchText = null, $sort = null, $categoryID = null, $subCategoryID = null)
+    function getProducts($pagination = false, $searchText = null, $sort = null, $categoryID = null, $subCategoryID = null)
     {
 
-        $totalResult = $this->getProductsQuery([
-            "limit" => null,
-            "offset" => null,
-            "search" => $searchText,
-            "sort" => $sort,
-            "categoryId" => $categoryID,
-            "subCategoryId" => $subCategoryID,
-        ])->num_rows();
-
-        $paginate = $this->pagination($totalResult);
-        $data = [];
-        if ($paginate->status === false) return $data;
+        if ($pagination) {
+            $totalResult = $this->getProductsQuery([
+                "limit" => null,
+                "offset" => null,
+                "search" => $searchText,
+                "sort" => $sort,
+                "categoryId" => $categoryID,
+                "subCategoryId" => $subCategoryID,
+            ])->num_rows();
+            $paginate = $this->pagination($totalResult);
+            $data = [];
+            if ($paginate->status === false) return $data;
+            $result["pagination"] = $paginate;
+        }
 
         $products = $this->getProductsQuery([
-            "limit" => $paginate->ResultCountPerPage,
-            "offset" => $paginate->offset,
+            "limit" => isset($paginate->ResultCountPerPage) ? $paginate->ResultCountPerPage : null,
+            "offset" => isset($paginate->offset) ? $paginate->offset : null,
             "search" => $searchText,
             "sort" => $sort,
             "categoryId" => $categoryID,
@@ -92,7 +94,8 @@ class Product_model extends CI_Model
             $product->cover = base_url("upload/products/") . $product->cover;
             $product->cover_exact = $product->cover;
         }
-        return ["products" => $products, "pagination" => $paginate];
+        $result["products"] = $products;
+        return $result;
     }
 
     function getProductsByIds(array $ids)

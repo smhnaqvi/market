@@ -20,7 +20,7 @@ class Product extends Main
         $search = $this->input->get("search");
         $this->load->model("Product_model");
         $this->load->model("Product_Price_model");
-        $products = $this->Product_model->getProducts($search);
+        $products = $this->Product_model->getProducts(true, $search);
         if (!empty($products)) {
             foreach ($products["products"] as &$product) {
                 $product->sell_price = $this->Product_Price_model->getLastPrice($product->product_id);

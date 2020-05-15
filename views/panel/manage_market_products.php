@@ -12,9 +12,9 @@
                     <label class="input-group-text" for="product_id">لیست محصولات</label>
                 </div>
                 <select required name="product_id" class="custom-select" id="product_id">
-                    <option selected disabled></option>
-                    <?php foreach ($content["products"] as $product) : ?>
-                        <option value="<?= $product->id ?>"><?= $product->name ?></option>
+                    <option selected disabled>یک محصول انتخاب کنید</option>
+                    <?php foreach ($content["products"]["products"] as $product) : ?>
+                        <option value="<?= $product->product_id ?>"><?= $product->name ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>

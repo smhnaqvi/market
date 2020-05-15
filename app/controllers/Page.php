@@ -34,7 +34,7 @@ class Page extends My_Controller
 
         $this->load->model("Product_model");
         $this->load->model("Product_Price_model");
-        $products = $this->Product_model->getProducts(addslashes($search), addslashes($sort), $categoryID, $SubCategoryID);
+        $products = $this->Product_model->getProducts(true, addslashes($search), addslashes($sort), $categoryID, $SubCategoryID);
         if (!empty($products)) {
             foreach ($products["products"] as &$product) {
                 $product->sell_price = $this->Product_Price_model->getLastPrice($product->product_id);
