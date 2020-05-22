@@ -13,8 +13,35 @@ class Basket extends My_Controller
 
     function index()
     {
-        $basket = $this->cart->contents();
-        $count = $this->cart->total();
-        $this->template(new ViewResponse("enduser", "Pages/basket", "سبد خرید", ["basket" => $basket]));
+        $this->load->library("cart");
+        $data = [
+            "items" => $this->cart->contents(),
+            "total_price" => $this->cart->total(),
+            "total_items" => count($this->cart->contents())
+        ];
+        $this->template(new ViewResponse("enduser", "Pages/basket2", "سبد خرید", ["basket" => $data]));
+    }
+
+    function basket2()
+    {
+        $this->load->library("cart");
+        $data = [
+            "items" => $this->cart->contents(),
+            "total_price" => $this->cart->total(),
+            "total_items" => count($this->cart->contents())
+        ];
+        $this->template(new ViewResponse("enduser", "Pages/basket", "", ["basket" => $data]));
+    }
+
+    function removeItem()
+    {
+        $this->load->library("cart");
+        $rowId = $this->input->get("rowId");
+        if (!isset($rowId)) {
+            $this->redirectBackward();
+        }
+
+        $this->cart->remove($rowId);
+        $this->redirectBackward();
     }
 }

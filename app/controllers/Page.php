@@ -59,4 +59,13 @@ class Page extends My_Controller
         if (empty($subCategories)) show_404();
         $this->template(new ViewResponse("enduser", "Pages/subCategory", "ریز دسته ها", ["subCategories" => $subCategories]));
     }
+
+    public function panelLogin()
+    {
+        if (isset($_SESSION["admin_info"])) {
+            redirect(base_url("panel"));
+        } else {
+            $this->load->view("login");
+        }
+    }
 }

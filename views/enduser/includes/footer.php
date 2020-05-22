@@ -22,13 +22,13 @@
 <footer>
     <ul>
         <li>
-            <a href="<?=base_url('/home')?>">
+            <a href="<?= base_url('/home') ?>">
                 <span class="fal fa-home"></span>
                 <span>صفحه اصلی</span>
             </a>
         </li>
         <li>
-            <a href="<?=base_url('/products')?>">
+            <a href="<?= base_url('/products') ?>">
                 <span class="fal fa-store"></span>
                 <span>سوپر مارکت</span>
             </a>
@@ -40,14 +40,17 @@
             </a>
         </li>
         <li>
-            <a data-toggle="modal" data-target="#basketModal">
+            <a href="<?= base_url('/basket') ?>" data-toggle="@modal" data-target="@#basketModal">
                 <span class="fal fa-shopping-basket"><span class="basket-counter"></span></span>
                 <span>سبد خرید</span>
             </a>
         </li>
     </ul>
 </footer>
+<script>
 
+    const base_url = "<?= base_url() ?>";
+</script>
 <script src="<?= base_url("assets/library/jquery-3.4.1.min.js") ?>"></script>
 <script src="<?= base_url("assets/library/bootstrap/js/popper.min.js") ?>"></script>
 <script src="<?= base_url("assets/library/bootstrap/js/bootstrap.min.js") ?>"></script>

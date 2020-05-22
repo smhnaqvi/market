@@ -75,7 +75,6 @@ footer ul li a span.basket-counter {
 /** market product */
 div.card-body {
     display: flex;
-    position: relative;
 }
 
 img.product-cover {
@@ -95,7 +94,8 @@ img.product-cover-sm {
     color: #ee7a33;
     font-size: 11px;
 }
-.product-title-sm{
+
+.product-title-sm {
     color: #ee7a33;
     font-size: 15px;
     margin-bottom: 5px;
@@ -103,13 +103,22 @@ img.product-cover-sm {
 
 .product-info {
     text-align: right;
-    /* margin-right: 20px; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+}
+
+.product-price-box {
+    margin-left: auto;
 }
 
 .product-price {
     font-size: 14px;
     color: #06ba3a;
 }
+
 .product-price-sm {
     font-size: 17px;
     color: #06ba3a;
@@ -122,17 +131,25 @@ img.product-cover-sm {
     color: #908c76;
 }
 
-.product-price-sm span{
+.product-price-sm span {
     font-size: 12px;
     padding: 2px;
     color: #908c76;
 }
 
 .product-addCart {
-    position: absolute;
-    left: 0%;
     width: 100px;
     text-align-last: center;
+}
+
+.product-item-total-price {
+    margin-top: 100%;
+    font-size: 13px;
+}
+
+.btn-remove-item {
+    position: absolute;
+    left: -50px;
 }
 
 .product-addCart input[type=number]::-webkit-inner-spin-button,
@@ -140,7 +157,8 @@ img.product-cover-sm {
     -webkit-appearance: none;
     margin: 0;
 }
-.product-addCart input{
+
+.product-addCart input {
     height: 25px;
     width: 50px;
 }
@@ -155,4 +173,35 @@ img.product-cover-sm {
 
 div.product-count i {
     cursor: pointer;
+}
+
+
+/** style basket 2 */
+
+.product-info2 {
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+    height: 90px;
+}
+
+img.product-cover2 {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    padding: 1px;
+    margin-right: -28px;
+    background: #d9dadb;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+.btn-remove-item2{
+
+}
+
+._font-size{
+    font-size: 13px !important;
 }

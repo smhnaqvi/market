@@ -57,6 +57,7 @@ class Product_model extends CI_Model
             $this->db->join("product_category", "product_category.product_id = $this->table.id $condition");
         }
 
+        $this->db->where("is_deleted", 0);
         $this->db->where("is_active", 1);
         $this->db->like("name", $config["search"]);
         if (isset($config["sort"])) $this->db->order_by("created_at", $config["sort"]);
@@ -167,7 +168,9 @@ class Product_model extends CI_Model
         $this->db->select()
             ->from($this->table)
             ->join("product_category", "product_category.product_id = $this->table.id")
-            ->where("product_category.subcategory_id", $id);
+            ->where("product_category.subcategory_id", $id)
+            ->where("$this->table.is_deleted", 0)
+            ->where("$this->table.is_active", 1);
         $this->db->like("$this->table.name", $search);
         return $this->db->get()->result();
     }

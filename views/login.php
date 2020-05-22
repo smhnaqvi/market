@@ -18,7 +18,7 @@
 </head>
 
 <body class="text-center">
-<form action="<?= base_url("login/checkUser") ?>" method="post" class="form-signin">
+<form action="<?= base_url("login/adminLogin") ?>" method="post" class="form-signin">
     <h1 class="h3 mb-3 font-weight-normal">سوپر مارکت آنلاین</h1>
     <?php if (isset($_SESSION["error"])) { ?>
         <div class="alert alert-danger" role="alert">

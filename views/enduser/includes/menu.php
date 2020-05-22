@@ -1,4 +1,4 @@
-<div class="container pt-4">
+<div class="container pt-4" style="margin-bottom: 70px;">
 <div class="row">
-    <h5 class="h5 w-100 text-right"><?= $title ?></h5>
+    <h5 class="h5 w-100 text-right d-none"><?= $title ?></h5>
 </div>

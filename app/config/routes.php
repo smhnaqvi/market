@@ -3,7 +3,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 require_once "routes_api.php";
 
 $route['default_controller'] = 'Page/products';
-$route['login'] = 'Login';
+
+$route['login/adminLogin']['POST'] = 'Login/adminLogin';
+$route['panel/login'] = 'Page/panelLogin';
+
 
 /** pages */
 $route['home'] = 'Page/index';
@@ -34,7 +37,6 @@ $route['panel/category/(:num)/subcategory-products']["GET"] = 'Panel/Category/pr
 
 
 $route['panel'] = 'Panel/Main/index';
-$route['panel/login'] = 'Login/index';
 $route['panel/logout'] = 'Login/logout';
 
 /** product */
@@ -56,9 +58,6 @@ $route['panel/market/(:num)/add-product'] = 'Panel/Market/assignProduct/$1';
 /** order */
 $route['panel/order/manage'] = 'Panel/Order/index';
 
-
-/** api */
-$route['api/getSubCategory'] = 'Panel/Category/apiGetSubCategory';
 
 
 $route['404_override'] = '';

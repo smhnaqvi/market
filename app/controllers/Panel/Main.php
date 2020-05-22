@@ -9,10 +9,10 @@ class Main extends MY_Controller
     {
         parent::__construct();
         $userData = $this->session->get_userdata();
-        if (!isset($userData["user_info"])) {
+        if (!isset($userData["admin_info"])) {
             redirect(base_url("panel/login"));
         }
-        $userData = $userData["user_info"];
+        $userData = $userData["admin_info"];
         $this->user_id = $userData->id;
     }
 
