@@ -29,7 +29,7 @@
                     <th scope="row"><?= $i + 1 ?></th>
                     <td><?= $item->name ?></td>
                     <td><?= $item->created_at ?></td>
-                    <td><span class="text-success"><?= $item->sell_price ?></span> تومان</td>
+                    <td><span class="text-success"><?= number_format($item->sell_price) ?></span> تومان</td>
                     <td><img class="img-fluid img-thumbnail rounded cover" style="height: 50px"
                              src="<?= base_url('upload/products/') . $item->cover ?>" alt="<?= $item->name ?>"></td>
                     <td>

@@ -6,7 +6,7 @@
 <div class="row">
     <?php $market_id = $content['market']->id; ?>
     <div class="col-md-4 col-sm-12 mb-5">
-        <form action="<?= base_url("panel/market/$market_id/add-product") ?>" method="post">
+        <form action="<?= base_url("panel/market/add-product") ?>" method="post">
             <div class="input-group mb-3">
                 <div class="input-group-append">
                     <label class="input-group-text" for="product_id">لیست محصولات</label>
@@ -37,6 +37,7 @@
                     <?= $_SESSION["form_error"] ?>
                 </div>
             <?php } ?>
+            <input type="text" name="market_id" value="<?= $market_id ?>">
             <button class="btn btn-success w-100" type="submit">ثبت محصول</button>
         </form>
     </div>
@@ -49,20 +50,24 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">نام محصول</th>
-                <th scope="col">قیمت</th>
+                <th scope="col">قیمت فروشگاه</th>
+                <th scope="col">قیمت فروش</th>
                 <th scope="col">تاریخ بروزرسانی</th>
                 <th scope="col">عکس محصول</th>
             </tr>
             </thead>
             <tbody>
-            <?php $i = 0;foreach ($content["market_products"] as $item) { ?>
+            <?php $i = 0;
+            foreach ($content["market_products"] as $item) { ?>
                 <tr>
                     <th scope="row"><?= $i + 1 ?></th>
                     <td><?= $item->name ?></td>
-                    <td><?= $item->price ?></td>
+                    <td><span class="text-danger"><?= number_format($item->price) ?></span> تومان</td>
+                    <td><span class="text-success"><?= number_format($item->sell_price) ?></span> تومان</td>
                     <td><?= $item->updated_at ?></td>
                     <td style="width: 150px;">
-                        <img class="img-fluid img-thumbnail rounded cover" style="height: 50px" src="<?= base_url('upload/products/') . $item->cover ?>" alt="<?= $item->name ?>">
+                        <img class="img-fluid img-thumbnail rounded cover" style="height: 50px"
+                             src="<?= base_url('upload/products/') . $item->cover ?>" alt="<?= $item->name ?>">
                     </td>
                 </tr>
             <?php } ?>
