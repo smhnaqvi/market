@@ -36,9 +36,6 @@
                                     <!--<a class="dropdown-item" href="base_url("panel/category/$item->id/update-subcategory")">ویرایش</a>-->
                                     <a class="dropdown-item"
                                        href="<?= base_url("panel/category/$item->id/subcategory-products") ?>">محصولات</a>
-                                </div>
-                                <div class="dropdown-menu text-center">
-                                    <!--<a class="dropdown-item" href="base_url("panel/category/$item->id/update-subcategory")">ویرایش</a>-->
                                     <a class="dropdown-item"
                                        href="<?= base_url("panel/category/$item->id/delete-subcategory") ?>">حذف</a>
                                 </div>
@@ -51,7 +48,8 @@
         <?php else: ?>
             <div style="font-size: 14pt" class="alert alert-warning d-flex justify-content-center align-items-center"
                  role="alert">
-                هیچ زیر دسته ثبت نشده <i style="font-size: 20pt; padding: 0 10px 0 0" class="fal fa-frown text-danger"></i>
+                هیچ زیر دسته ثبت نشده <i style="font-size: 20pt; padding: 0 10px 0 0"
+                                         class="fal fa-frown text-danger"></i>
             </div>
         <?php endif; ?>
     </div>

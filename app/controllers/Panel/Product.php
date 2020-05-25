@@ -15,18 +15,19 @@ class Product extends Main
 
     public function index()
     {
-        $this->load->model("Category_model");
+        $this->load->model(["Product_model", "Product_Price_model", "Category_model", "Market_model"]);
         $categories = $this->Category_model->getCategories();
         $search = $this->input->get("search");
-        $this->load->model("Product_model");
-        $this->load->model("Product_Price_model");
         $products = $this->Product_model->getProducts(true, $search);
         if (!empty($products)) {
             foreach ($products["products"] as &$product) {
                 $product->sell_price = $this->Product_Price_model->getLastPrice($product->product_id);
             }
         }
-        $data = new ViewResponse("panel", "manage_products", 'مدیریت محصولات ها', ["products" => $products, "categories" => $categories]);
+
+        $markets = $this->Market_model->getMarkets(["is_deleted" => 0]);
+
+        $data = new ViewResponse("panel", "manage_products", 'مدیریت محصولات ها', ["products" => $products, "categories" => $categories, "markets" => $markets]);
         $this->template($data);
     }
 
@@ -45,8 +46,6 @@ class Product extends Main
 
     public function store()
     {
-
-
         $fileInput = "cover";
         if (isset($_FILES["$fileInput"])) {
             $_POST["$fileInput"] = true;

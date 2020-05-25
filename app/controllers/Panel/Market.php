@@ -50,29 +50,35 @@ class Market extends Main
 
         $insertingResult = $this->Market_model->newMarket(array(
             "name" => $this->input->post("name", true),
-            "owner" => $this->input->post("owner_name", true),
+            "owner_name" => $this->input->post("owner_name", true),
             "address" => $this->input->post("address", true),
             "phone_number" => $this->input->post("phone_number", true),
             "user_id" => $this->user_id,
         ));
 
         if ($insertingResult === false) {
-            $this->session->set_flashdata("error", "حطایی در اینجاد محصول بوجود آمده است");
+            $this->session->set_flashdata("error", "حطایی در اینجاد مغازه جدید بوجود آمده است");
         } else {
-            $this->session->set_flashdata("success", "محصول با موفقیت اضافه شد.");
+            $this->session->set_flashdata("success", "مغازه جدید با موفقیت اضافه شد.");
         }
         return $this->redirectBackward();
     }
 
-    public function assignProduct($id = null)
+    public function assignProduct()
     {
-        if (!isset($id)) $this->redirectBackward();
 
+        $this->form_validation->set_rules("market_id", '', "required|integer");
         $this->form_validation->set_rules("product_id", '', "required|integer");
         $this->form_validation->set_rules("product_price", '', "required|integer");
         $this->form_validation->set_rules("product_sell_price", '', "required|integer");
         if ($this->form_validation->run() === false) {
             $this->session->set_flashdata("form_error", validation_errors());
+            $this->redirectBackward();
+        }
+        $id = $this->input->post("market_id", true);
+        $market = $this->Market_model->getMarket($id);
+        if (empty($market)) {
+            $this->session->set_flashdata("form_error", "چنین مغازه ای وجود ندارد");
             $this->redirectBackward();
         }
 
@@ -82,9 +88,9 @@ class Market extends Main
         $this->load->model("Product_Price_model");
         $insertingResult = $this->Product_Price_model->setNewPrice($product_id, $id, $product_price, $product_sell_price);
         if ($insertingResult === false) {
-            $this->session->set_flashdata("error", "خطایی در اینجاد محصول بوجود آمده است");
+            $this->session->set_flashdata("error", "خطایی در ثبت محصول برای مغازه بوجود آمده است");
         } else {
-            $this->session->set_flashdata("success", "محصول با موفقیت اضافه شد.");
+            $this->session->set_flashdata("success", "قیمت محصول با موفقیت ثبت شد.");
         }
         return $this->redirectBackward();
     }

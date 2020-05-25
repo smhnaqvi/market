@@ -49,10 +49,9 @@ $route['panel/product/delete/(:num)']["GET"] = 'Panel/Product/delete/$1';
 /** market */
 $route['panel/market/manage'] = 'Panel/Market/index';
 $route['panel/market/add-new']['POST'] = 'Panel/Market/store';
-
+$route['panel/market/add-product'] = 'Panel/Market/assignProduct';
 $route['panel/market/(:num)/products'] = 'Panel/Market/marketProducts/$1';
 $route['panel/market/(:num)/activation'] = 'Panel/Market/activation/$1';
-$route['panel/market/(:num)/add-product'] = 'Panel/Market/assignProduct/$1';
 
 
 /** order */

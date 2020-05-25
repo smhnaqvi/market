@@ -103,10 +103,17 @@ class Category extends Main
             $this->redirectBackward();
         }
         $search = $this->input->get("search", true);
-        $this->load->model("Product_model");
+        $this->load->model(["Product_model", "Market_model", "Product_Price_model"]);
+
+        $markets = $this->Market_model->getMarkets(["is_deleted" => 0]);
 
         $products = $this->Product_model->getSubCategoryProducts($id, $search);
-        $this->template(new ViewResponse("panel", 'sub_category_products', 'محصولات', ["products" => $products]));
+        if (!empty($products)) {
+            foreach ($products as &$product) {
+                $product->sell_price = $this->Product_Price_model->getLastPrice($product->product_id);
+            }
+        }
+        $this->template(new ViewResponse("panel", 'sub_category_products', 'محصولات', ["products" => $products, "markets" => $markets]));
     }
 
     public function apiGetSubCategory()

@@ -11,15 +11,21 @@ document.getElementById("getCategoryId").addEventListener("change", function (e)
             let response = JSON.parse(request.response);
             if (response.success === true) {
 
-                if (response.data.subCategories.length > 0){
+                if (response.data.subCategories.length > 0) {
                     getSubCategoryId.innerHTML = "";
                     response.data.subCategories.map((value) => {
                         getSubCategoryId.innerHTML += `<option value="${value.id}">${value.title}</option>`
                     });
-                }else{
+                } else {
                     getSubCategoryId.innerHTML = "<option value='' disabled selected>نتیجه ای یافت نشد</option>";
                 }
             }
         }
-    }
+    };
 });
+
+function assignProductMarket({product_id, product_name}) {
+    $("#product_id").val(product_id);
+    $("#assignProductMarketModalTitle").html(`افزودن محصول <strong class="text-success">${product_name}</strong> به مغازه`);
+    $('#assignProductMarket').modal('show');
+}
