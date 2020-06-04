@@ -37,7 +37,7 @@
                     <?= $_SESSION["form_error"] ?>
                 </div>
             <?php } ?>
-            <input type="text" name="market_id" value="<?= $market_id ?>">
+            <input aria-label="" type="text" name="market_id" hidden value="<?= $market_id ?>">
             <button class="btn btn-success w-100" type="submit">ثبت محصول</button>
         </form>
     </div>

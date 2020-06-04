@@ -50,6 +50,8 @@
  * @property Product_Price_model $Product_Price_model
  * @property Market_model $Market_model
  * @property Upload_model $Upload_model
+ * @property Order_model $Order_model
+ * @property Basket_model $Basket_model
  */
 class CI_Controller
 {

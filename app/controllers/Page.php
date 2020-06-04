@@ -18,9 +18,22 @@ class Page extends My_Controller
         $this->template(new ViewResponse("enduser", "Pages/contact", "", ""));
     }
 
-    public function product($productId)
+    public function product($productId = null)
     {
-        $this->template(new ViewResponse("enduser", "Pages/product", "", ""));
+        if (!isset($productId)) show_404();
+        $this->load->model(["Product_model", "Product_Price_model"]);
+        $product = $this->Product_model->getProduct($productId);
+        if (empty($product)) show_404();
+        $product->sell_price = $this->Product_Price_model->getLastPrice($product->id);
+
+        $similar_products = $this->Product_model->getSubCategoryProducts($product->subcategory_id);
+//        $a = array();
+//        for ($i = 0; $i < 30; $i++) {
+//            foreach ($similar_products as $item) {
+//                $a[] = $item;
+//            }
+//        }
+        $this->template(new ViewResponse("enduser", "Pages/product", "محصول", ["product" => $product, "similar_products" => $similar_products]));
     }
 
     public function products()
@@ -34,7 +47,7 @@ class Page extends My_Controller
 
         $this->load->model("Product_model");
         $this->load->model("Product_Price_model");
-        $products = $this->Product_model->getProducts(true, addslashes($search), addslashes($sort), $categoryID, $SubCategoryID);
+        $products = $this->Product_model->getProducts(false, addslashes($search), addslashes($sort), $categoryID, $SubCategoryID);
         if (!empty($products)) {
             foreach ($products["products"] as &$product) {
                 $product->sell_price = $this->Product_Price_model->getLastPrice($product->product_id);

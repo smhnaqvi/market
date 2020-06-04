@@ -3,6 +3,14 @@ $(document).ready(function () {
 
     updateBasket();
 
+    $("#btnSearch").click(() => {
+        $("#searchBox").fadeIn();
+    });
+
+    $("#btnCloseSearch").click(() => {
+        $("#searchBox").fadeOut();
+    });
+
     $(".plusCounter").click(function (e) {
         let elem = $(e.target).parent().find("input[data-qty]");
         elem.val(parseInt(elem.val()) + 1)
@@ -92,31 +100,50 @@ function addToBasket(elem) {
     if (_qty !== data.qty) {
         $.post(base_url + "api/v1/basket/addItem", data, function (response) {
             if (response.success) {
-                updateBasket().then(() => {
-                    let basketItems = getBasketData();
-                    if (basketItems.items[parent.attr("data-rowId")] !== undefined) {
-                        let subtotal = basketItems.items[parent.attr("data-rowId")].subtotal;
-                        parent.find(".product-item-total-price").html(new Intl.NumberFormat('en-IN').format(subtotal));
-                        animateCSS(parent.find(".product-item-total-price")[0], 'tada');
-                    }
-                    const element = document.getElementById('setTotalPrice');
-                    if (element !== null) {
-                        element.innerHTML = new Intl.NumberFormat('en-IN').format(basketItems.total_price);
-                        animateCSS(element, 'flash');
-                    }
-                });
+                updateBasket();
             }
         })
     }
 }
 
+function updateBasketQTY() {
+    let data = [];
+    $("div[data-rowId]").map((i, elem) => {
+        data.push({
+            rowid: $(elem).attr("data-rowId"),
+            id: $(elem).attr("data-id"),
+            title: $(elem).find("[data-title]").attr("data-title"),
+            price: $(elem).find("[data-price]").attr("data-price"),
+            cover: $(elem).find("[data-cover]").attr("data-cover"),
+            qty: $(elem).find("[data-qty]").val(),
+        })
+    });
+
+    $.post(base_url + "api/v1/basket/update", JSON.stringify(data), function (response) {
+        if (response.success) {
+            updateBasket().then(() => {
+                let basketItems = getBasketData();
+                $("div[data-rowId]").map((i, elem) => {
+                    if (basketItems.items[$(elem).attr("data-rowId")] !== undefined) {
+                        let subtotal = basketItems.items[$(elem).attr("data-rowId")].subtotal;
+                        $(elem).find(".product-item-total-price").html(new Intl.NumberFormat('en-IN').format(subtotal));
+                    }
+                });
+                const element = document.getElementById('setTotalPrice');
+                if (element !== null) {
+                    element.innerHTML = new Intl.NumberFormat('en-IN').format(basketItems.total_price);
+                    animateCSS(element, 'flash');
+                }
+            });
+        }
+    });
+}
 
 const animateCSS = (node, animation, prefix = 'animate__') =>
     // We create a Promise and return it
     new Promise((resolve, reject) => {
         const animationName = `${prefix}${animation}`;
         // const node = document.querySelector(element);
-        // console.log(node);
         // animate__animated animate__bounce
         node.classList.add(`${prefix}animated`, animationName);
 

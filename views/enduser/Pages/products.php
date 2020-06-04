@@ -1,44 +1,33 @@
-<div class="search-box">
-    <form action="" method="GET">
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" name="search" placeholder="جستحو کن..." aria-label=""
-                   aria-describedby="basic-addon1"
-                   value="<?= (isset($_GET["search"]) ? $_GET["search"] : null) ?>">
-            <div class="input-group-prepend">
-                <button class="btn btn-success" type="submit"><i class="fal fa-search"></i></button>
-            </div>
-        </div>
-    </form>
-</div>
-<?php if (!empty($content["products"]["products"])) : ?>
-    <?php foreach ($content["products"]["products"] as $product) : ?>
-        <div class="card mb-3">
-            <div class="card-body align-items-center p-0">
-                <div data-rowId="" data-id="<?= $product->product_id ?>" class="product-info">
-                    <img data-cover="<?= $product->cover ?>" class="product-cover"
-                         src="<?= $product->cover ?>" alt="<?= $product->name ?>">
+<div class="row">
+    <?php if (!empty($content["products"]["products"])) : ?>
+        <div class="col-md-12  products-list">
+            <?php foreach ($content["products"]["products"] as $product) : ?>
+                <div data-rowId="" data-id="<?= $product->product_id ?>" class="product-item pb-5">
+                    <a href="<?= base_url("page/product/$product->product_id") ?>"
+                       style="text-decoration: none; display: contents">
+                        <img data-cover="<?= $product->cover ?>" src="<?= $product->cover ?>" alt="">
+                    </a>
                     <div class="product-price-box">
-                        <h1 data-title="<?= $product->name ?>" class="product-title _font-size"><?= $product->name ?></h1>
-                        <h1 data-price="<?= $product->sell_price ?>"
-                            class="product-price"><?= number_format($product->sell_price) ?><span>تومان</span></h1>
-                    </div>
-                    <div class="product-addCart">
-                        <div class="product-count">
-                            <i class="fal fa-plus plusCounter"></i>
-                            <input aria-label="" data-qty type="number" class="text-center form-control" value="1">
-                            <i class="fal fa-minus minusCounter"></i>
+                        <div data-title="<?= $product->name ?>" class="title"><?= $product->name ?></div>
+                        <div data-price="<?= $product->sell_price ?>"
+                             class="price my-2"><?= number_format($product->sell_price) ?>
+                            <p class="d-inline-block pr-1 m-0">ت</p>
                         </div>
-                        <button onclick="addToBasket(this)" class="btn btn-sm btn-light" style="font-size: 15px;"><i
-                                    class="fal fa-cart-plus px-2 text-success"></i>
-                        </button>
+                        <button onclick="addToBasket(this)" class="addToCart2 fal fa-plus"></button>
+                    </div>
+                    <div class="product-count w-75">
+                        <i class="fal fa-plus plusCounter"></i>
+                        <input aria-label="" data-qty type="number" class="text-center form-control py-0 mx-2 w-25"
+                               value="1">
+                        <i class="fal fa-minus minusCounter"></i>
                     </div>
                 </div>
-            </div>
+            <?php endforeach; ?>
         </div>
-    <?php endforeach; ?>
-<?php else: ?>
-    <div style="font-size: 14pt" class="alert alert-warning d-flex justify-content-center align-items-center"
-         role="alert">
-        نتیجه ای یافت نشد <i style="font-size: 20pt; padding: 0 10px 0 0" class="fal fa-frown text-danger"></i>
-    </div>
-<?php endif ?>
+    <?php else: ?>
+        <div style="font-size: 14pt" class="alert alert-warning d-flex justify-content-center align-items-center"
+             role="alert">
+            نتیجه ای یافت نشد <i style="font-size: 20pt; padding: 0 10px 0 0" class="fal fa-frown text-danger"></i>
+        </div>
+    <?php endif ?>
+</div>

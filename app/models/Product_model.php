@@ -18,7 +18,7 @@ class Product_model extends CI_Model
     public function pagination($num_rows)
     {
         $showingCount = $this->input->get("show_count");
-        if (!isset($showingCount)) $showingCount = 8;
+        if (!isset($showingCount)) $showingCount = 20;
 
         $prePage = $this->input->get('page');
         if (!isset($prePage)) $_GET["page"] = 1;
@@ -124,11 +124,13 @@ class Product_model extends CI_Model
         $this->load->model("Category_model");
         $productCat_table = $this->Product_Category_model->table;
         $cat_table = $this->Category_model->table;
-        return $this->db->select("$this->table.*,$productCat_table.category_id,$cat_table.title as category_title")->from($this->table)
+        $query = $this->db->select("$this->table.*,$productCat_table.category_id,$cat_table.title as category_title,$productCat_table.subcategory_id")->from($this->table)
             ->join($productCat_table, "$productCat_table.product_id = $this->table.id", "left")
             ->join($cat_table, "$cat_table.id = $productCat_table.category_id", "left")
             ->where("$this->table.id", $id)
-            ->get()->result();
+            ->get(null, 1);
+
+        return ($query->num_rows() === 1) ? $query->result()[0] : [];
     }
 
     public function getProductCover($id)

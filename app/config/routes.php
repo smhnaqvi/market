@@ -22,6 +22,7 @@ $route['page/product/(:num)'] = 'Page/product/$1';
 $route['market/(:num)'] = 'Market/products/$1';
 $route['market/(:num)/category'] = 'Market/category/$1';
 
+$route['order/new-request']['POST'] = 'Order/newRequest';
 
 /** category */
 $route['panel/category/manage'] = 'Panel/Category/index';
@@ -56,7 +57,6 @@ $route['panel/market/(:num)/activation'] = 'Panel/Market/activation/$1';
 
 /** order */
 $route['panel/order/manage'] = 'Panel/Order/index';
-
 
 
 $route['404_override'] = '';

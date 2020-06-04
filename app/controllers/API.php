@@ -112,4 +112,19 @@ class API extends My_Controller
         $this->response(false, [["code" => 14005, "message" => "خطایی در حذف بوجود آمده است. دوباره تلاش کنید"]]);
     }
 
+    function updateBasketItems()
+    {
+        $data = file_get_contents('php://input', true);
+        $basketData = json_decode($data);
+        $this->load->library("cart");
+        foreach ($basketData as $datum) {
+            if (!empty($this->cart->get_item($datum->rowid))) {
+                if (!$this->cart->update((array)$datum)) {
+                    $this->response(false, null, (array)$datum);
+                }
+            }
+        }
+        $this->response(true);
+    }
+
 }
