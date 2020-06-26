@@ -12,41 +12,90 @@ class Category extends Main
         $this->load->model("Category_model");
     }
 
-    public function index()
+    public function index($id = null)
     {
+        $category = array();
+        if (isset($id)) {
+            $category = $this->Category_model->getCategoryById($id);
+            if (empty($category)) {
+                $this->redirectBackward();
+            }
+        }
+
         $categories = $this->Category_model->getCategories();
-        $data = new ViewResponse("panel", "manage_category", 'مدیریت دسته بندی ها', $categories);
+        $data = new ViewResponse("panel", "manage_category", 'مدیریت دسته بندی ها', ["categories" => $categories, "category" => $category]);
         $this->template($data);
     }
 
     public function store()
     {
+        $fileInput = "cover";
+        if (isset($_FILES["$fileInput"])) {
+            $_POST["$fileInput"] = true;
+        }
+
+
         $this->form_validation->set_rules("title", '', "required");
+        $this->form_validation->set_rules("$fileInput", '', "required");
         if ($this->form_validation->run() === false) {
+            $this->session->set_flashdata("form_error", validation_errors());
+            $this->redirectBackward();
+        }
+
+        $productCover = $this->uploadImage($fileInput, "category");
+        if ($productCover === false) {
+            $this->session->set_flashdata("form_error", "حطایی در آپلود عکس بوجود آمده است");
             $this->redirectBackward();
         }
 
         $this->Category_model->newCategory(array(
             "title" => $this->input->post("title", true),
             "description" => $this->input->post("description", true),
+            "cover" => $productCover,
         ));
         return $this->redirectBackward();
     }
 
     public function update()
     {
+
         $this->form_validation->set_rules("id", '', "required");
         $this->form_validation->set_rules("title", '', "required");
-        $this->form_validation->set_rules("description", '', "required");
         if ($this->form_validation->run() === false) {
+            $this->session->set_flashdata("form_error", validation_errors());
             $this->redirectBackward();
         }
 
+        $fileInput = "cover";
+        $productCover = null;
+        /** if product new cover is exist we should upload that cover */
+        if (isset($_FILES["$fileInput"]) and !empty($_FILES["$fileInput"]["name"]) and $_FILES["$fileInput"]["error"] === 0) {
+            $productCover = $this->uploadImage($fileInput, "category");
+            if ($productCover === false) {
+                $this->session->set_flashdata("form_error", "خطایی در آپلود عکس بوجود آمده است");
+                $this->redirectBackward();
+            }
+        }
+
         $id = $this->input->post("id", true);
-        $this->Category_model->updateCategory($id, array(
+        $data = array(
             "title" => $this->input->post("title", true),
             "description" => $this->input->post("description", true),
-        ));
+        );
+        /** if product cove is changed update cover name on the database */
+        if (isset($productCover)) {
+            $data["cover"] = $productCover;
+            $category = $this->Category_model->getCategoryById($id);
+            if (!empty($category->cover)) {
+                $removing = $this->Upload_model->removeCover($category->cover, "category");
+                if (!$removing) {
+                    $this->session->set_flashdata("error", "خطایی در حذف عکس بوجود آمده است");
+                    return $this->redirectBackward();
+                }
+            }
+        }
+
+        $this->Category_model->updateCategory($id, $data);
         return $this->redirectBackward();
     }
 
@@ -55,7 +104,15 @@ class Category extends Main
         if (!isset($id)) {
             $this->redirectBackward();
         }
-
+        $category = $this->Category_model->getCategoryById($id);
+        if (!empty($category->cover)) {
+            $this->load->model("Upload_model");
+            $removing = $this->Upload_model->removeCover($category->cover, "category");
+            if (!$removing) {
+                $this->session->set_flashdata("error", "خطایی در حذف عکس بوجود آمده است");
+                $this->redirectBackward();
+            }
+        }
         $this->Category_model->removeCategory($id);
         $this->redirectBackward();
     }

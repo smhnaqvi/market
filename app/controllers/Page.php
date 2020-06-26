@@ -23,16 +23,18 @@ class Page extends My_Controller
         if (!isset($productId)) show_404();
         $this->load->model(["Product_model", "Product_Price_model"]);
         $product = $this->Product_model->getProduct($productId);
+
         if (empty($product)) show_404();
         $product->sell_price = $this->Product_Price_model->getLastPrice($product->id);
 
         $similar_products = $this->Product_model->getSubCategoryProducts($product->subcategory_id);
-//        $a = array();
-//        for ($i = 0; $i < 30; $i++) {
-//            foreach ($similar_products as $item) {
-//                $a[] = $item;
-//            }
-//        }
+
+        if (!empty($similar_products)) {
+            foreach ($similar_products as &$product_item) {
+                $product_item->sell_price = (int)$this->Product_Price_model->getLastPrice($product_item->id);
+            }
+        }
+
         $this->template(new ViewResponse("enduser", "Pages/product", "محصول", ["product" => $product, "similar_products" => $similar_products]));
     }
 
@@ -46,7 +48,10 @@ class Page extends My_Controller
         $search = $this->input->get("search", true);
 
         $this->load->model("Product_model");
+        $this->load->model("Category_model");
         $this->load->model("Product_Price_model");
+
+        $category = $this->Category_model->getCategoryById($categoryID);
         $products = $this->Product_model->getProducts(false, addslashes($search), addslashes($sort), $categoryID, $SubCategoryID);
         if (!empty($products)) {
             foreach ($products["products"] as &$product) {
@@ -54,7 +59,7 @@ class Page extends My_Controller
             }
         }
 
-        $this->template(new ViewResponse("enduser", "Pages/products", "محصولات", ["products" => $products]));
+        $this->template(new ViewResponse("enduser", "Pages/products", "محصولات", ["products" => $products, "category" => $category]));
     }
 
     public function categories()

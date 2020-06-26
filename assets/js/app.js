@@ -94,6 +94,7 @@ function addToBasket(elem) {
         cover: cover.attr("data-cover"),
         qty: qty.val(),
     };
+    console.log(data);
 
     let basketItems = getBasketData();
     let _qty = (basketItems.items[parent.attr("data-rowId")] === undefined) ? '0' : basketItems.items[parent.attr("data-rowId")].qty.toString();

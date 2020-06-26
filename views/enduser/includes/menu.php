@@ -2,7 +2,7 @@
     <nav class="menu">
         <div class="links">
             <a href="<?= base_url() ?>">خانه</a>
-            <a href="#">دسته بندی</a>
+            <a href="<?= base_url() ?>categories">دسته بندی</a>
         </div>
         <div class="links" style="margin-top: 8px">
             <a href="#" class="fal fa-user"></a>

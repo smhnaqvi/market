@@ -17,4 +17,29 @@ class Order_model extends CI_Model
         return ($isCreated) ? $this->db->insert_id() : 0;
     }
 
+    /**
+     * @return array
+     */
+    public function getOrders(): array
+    {
+        return $this->db->get($this->table)->result();
+    }
+
+    public function getOrder($id)
+    {
+        $this->db->where("id", $id);
+        $order = $this->db->get($this->table, 1);
+        if ($order->num_rows() === 1) {
+            return $order->result()[0];
+        }
+        return [];
+    }
+
+    public function updateDeliverState($id)
+    {
+        $this->db->where("id", $id);
+        $this->db->set("is_delivered", 1);
+        return $this->db->update($this->table);
+    }
+
 }

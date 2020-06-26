@@ -1,3 +1,12 @@
+<?php if (!empty($content["category"])): ?>
+    <div class="row">
+        <div class="category-banner"
+             style="background-image: url('<?= base_url("upload/category/{$content["category"]->cover}") ?>');background-size: cover;background-position: center">
+            <span><?= $content["category"]->title ?></span>
+        </div>
+    </div>
+<?php endif; ?>
+
 <div class="row">
     <?php if (!empty($content["products"]["products"])) : ?>
         <div class="col-md-12  products-list">

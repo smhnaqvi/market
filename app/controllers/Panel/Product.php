@@ -94,8 +94,6 @@ class Product extends Main
     public function update()
     {
         /** TODO update product */
-
-
         $this->form_validation->set_rules("id", '', "required|integer");
         $this->form_validation->set_rules("name", '', "required");
         $this->form_validation->set_rules("category_id", '', "required|integer");
@@ -131,7 +129,6 @@ class Product extends Main
                 $this->session->set_flashdata("error", "خطایی در حذف عکس بوجود آمده است");
                 return $this->redirectBackward();
             }
-
         }
 
         $updatingResult = $this->Product_model->updateProduct($id, $data);

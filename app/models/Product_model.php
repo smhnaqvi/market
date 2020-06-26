@@ -129,8 +129,13 @@ class Product_model extends CI_Model
             ->join($cat_table, "$cat_table.id = $productCat_table.category_id", "left")
             ->where("$this->table.id", $id)
             ->get(null, 1);
-
-        return ($query->num_rows() === 1) ? $query->result()[0] : [];
+        if (($query->num_rows() === 1)) {
+            $cover = $query->result()[0]->cover;
+            $query->result()[0]->cover = base_url("upload/products/") . $cover;
+            $query->result()[0]->cover_exact = $cover;
+            return $query->result()[0];
+        }
+        return [];
     }
 
     public function getProductCover($id)
@@ -174,6 +179,11 @@ class Product_model extends CI_Model
             ->where("$this->table.is_deleted", 0)
             ->where("$this->table.is_active", 1);
         $this->db->like("$this->table.name", $search);
-        return $this->db->get()->result();
+        $products = $this->db->get()->result();
+        foreach ($products as $product) {
+            $product->cover = base_url("upload/products/") . $product->cover;
+            $product->cover_exact = $product->cover;
+        }
+        return $products;
     }
 }

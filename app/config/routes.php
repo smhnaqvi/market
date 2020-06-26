@@ -27,9 +27,11 @@ $route['order/new-request']['POST'] = 'Order/newRequest';
 /** category */
 $route['panel/category/manage'] = 'Panel/Category/index';
 $route['panel/category/add-new']["POST"] = 'Panel/Category/store';
+$route['panel/category/(:num)/edit']["GET"] = 'Panel/Category/index/$1';
 $route['panel/category/update']["POST"] = 'Panel/Category/update';
 $route['panel/category/(:num)/delete']["GET"] = 'Panel/Category/delete/$1';
 
+/** subcategories */
 $route['panel/category/(:num)/manage-subcategories']["GET"] = 'Panel/Category/indexSubCategories/$1';
 $route['panel/category/(:num)/add-new-subcategory']["POST"] = 'Panel/Category/storeSubCategory/$1';
 $route['panel/category/(:num)/update-subcategory']["GET"] = 'Panel/Category/updateSubCategory/$1';
@@ -57,6 +59,7 @@ $route['panel/market/(:num)/activation'] = 'Panel/Market/activation/$1';
 
 /** order */
 $route['panel/order/manage'] = 'Panel/Order/index';
+$route['panel/order/(:num)/delivered'] = 'Panel/Order/delivered/$1';
 
 
 $route['404_override'] = '';
