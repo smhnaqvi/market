@@ -1,7 +1,7 @@
 <?php //var_dump($content["similar_products"]); ?>
 <div class="container">
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div data-rowId="" data-id="<?= $content['product']->id ?>" class="product-info-2">
                 <img class="img-fluid"
                      src="<?= $content['product']->cover ?>"
@@ -25,7 +25,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">price chart</div>
     </div>
     <div class="row mt-5">
         <div class="col-md-12 mt-5 mb-3">

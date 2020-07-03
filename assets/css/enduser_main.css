@@ -318,6 +318,8 @@ div.product-info-2 {
     display: flex;
     direction: rtl;
     position: relative;
+    flex-direction: row;
+    align-items: center;
 }
 
 div.product-info-2 img {
@@ -491,4 +493,11 @@ img.category-cover {
     border-radius: 5px;
     border: 1px solid rgba(0, 0, 0, .1);
     color: var(--main-color);
+}
+
+
+@media only screen and (max-width: 600px) {
+    div.product-info-2 {
+        flex-direction: column;
+    }
 }
