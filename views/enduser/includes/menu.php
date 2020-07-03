@@ -12,8 +12,8 @@
             <a class="fal fa-search" id="btnSearch"></a>
             <div class="searchBox" style="display: none" id="searchBox">
                 <i id="btnCloseSearch" class="fal fa-times"></i>
-                <form action="">
-                    <input type="search" name="search" placeholder="جستجو" class="i-search">
+                <form action="<?= base_url("page/search") ?>" method="GET">
+                    <input type="search" name="q" placeholder="جستجو" class="i-search">
                 </form>
             </div>
         </div>

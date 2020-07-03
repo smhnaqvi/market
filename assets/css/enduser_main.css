@@ -381,7 +381,7 @@ div.product-info-2 .product-price-box .title {
 
 div.products-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     grid-gap: .5rem;
     align-items: start;
     /*display: grid;*/

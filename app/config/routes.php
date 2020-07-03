@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 require_once "routes_api.php";
 
-$route['default_controller'] = 'Page/products';
+$route['default_controller'] = 'Page/index';
 
 $route['login/adminLogin']['POST'] = 'Login/adminLogin';
 $route['panel/login'] = 'Page/panelLogin';
@@ -19,6 +19,7 @@ $route['basket'] = 'Basket/index';
 $route['page/about'] = 'Page/about';
 $route['page/contact'] = 'Page/contact';
 $route['page/product/(:num)'] = 'Page/product/$1';
+$route['search'] = 'Page/search';
 
 $route['market/(:num)'] = 'Market/products/$1';
 $route['market/(:num)/category'] = 'Market/category/$1';

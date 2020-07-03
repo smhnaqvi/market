@@ -38,6 +38,23 @@ class Page extends My_Controller
         $this->template(new ViewResponse("enduser", "Pages/product", "محصول", ["product" => $product, "similar_products" => $similar_products]));
     }
 
+    function search()
+    {
+        $this->load->model(["Product_model", "Category_model", "Product_Price_model"]);
+        $search = $this->input->get("q", true);
+        $products = $this->Product_model->getProducts(false, addslashes($search));
+        if (!empty($products)) {
+            foreach ($products["products"] as $index => &$product) {
+                $product->sell_price = $this->Product_Price_model->getLastPrice($product->product_id);
+                //TODO remove products if sell_price is zero
+//                if ($product->sell_price === 0) {
+//                    unset($products['products'][$index]);
+//                }
+            }
+        }
+        $this->template(new ViewResponse("enduser", "Pages/products", "محصولات", ["products" => $products]));
+    }
+
     public function products()
     {
         $categoryID = intval($this->input->get("c", true));
@@ -47,9 +64,7 @@ class Page extends My_Controller
         $sort = $this->input->get("sort", true);
         $search = $this->input->get("search", true);
 
-        $this->load->model("Product_model");
-        $this->load->model("Category_model");
-        $this->load->model("Product_Price_model");
+        $this->load->model(["Product_model", "Category_model", "Product_Price_model"]);
 
         $category = $this->Category_model->getCategoryById($categoryID);
         $products = $this->Product_model->getProducts(false, addslashes($search), addslashes($sort), $categoryID, $SubCategoryID);

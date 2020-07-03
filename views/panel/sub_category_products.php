@@ -31,7 +31,7 @@
                     <td><?= $item->created_at ?></td>
                     <td><span class="text-success"><?= number_format($item->sell_price) ?></span> تومان</td>
                     <td><img class="img-fluid img-thumbnail rounded cover" style="height: 50px"
-                             src="<?= base_url('upload/products/') . $item->cover ?>" alt="<?= $item->name ?>"></td>
+                             src="<?= $item->cover ?>" alt="<?= $item->name ?>"></td>
                     <td>
                         <div class="dropdown show text-left">
                             <i class="fal fa-ellipsis-v text-success pl-2 pr-2" style="font-size: 25px;cursor: pointer"

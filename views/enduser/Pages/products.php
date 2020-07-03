@@ -26,7 +26,7 @@
                     </div>
                     <div class="product-count w-75">
                         <i class="fal fa-plus plusCounter"></i>
-                        <input aria-label="" data-qty type="number" class="text-center form-control py-0 mx-2 w-25"
+                        <input aria-label="" data-qty type="number" class="text-center form-control py-0 mx-2 w-50"
                                value="1">
                         <i class="fal fa-minus minusCounter"></i>
                     </div>
