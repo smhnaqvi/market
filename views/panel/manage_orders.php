@@ -18,7 +18,6 @@
             <td><?= $item->address ?></td>
             <td><?= $item->created_at ?></td>
             <td><?= $item->pay_type ?></td>
-            <td><?= $item->is_delivered ?></td>
             <td><?= ($item->is_delivered === '0') ? "<span class='badge badge-danger'>هنوز  ارسال نشده</span>" : "<span class='badge badge-success'>ارسال شده</span>" ?></td>
             <td><?= ($item->is_paid === '0') ? "<span class='badge badge-danger'>پرداخت نشده</span>" : "<span class='badge badge-success'>پرداخت شده</span>" ?></td>
             <td>

@@ -14,6 +14,7 @@ $route['products'] = 'Page/products';
 $route['categories'] = 'Page/categories';
 $route['category/(:num)'] = 'Page/category/$1';
 $route['scp/(:num)'] = 'Page/subCategoryProducts/$1';
+$route['sub-categories/(:num)'] = 'Page/subCategories/$1';
 $route['basket'] = 'Basket/index';
 $route['page/about'] = 'Page/about';
 $route['page/contact'] = 'Page/contact';

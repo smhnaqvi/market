@@ -54,8 +54,12 @@ class Page extends My_Controller
         $category = $this->Category_model->getCategoryById($categoryID);
         $products = $this->Product_model->getProducts(false, addslashes($search), addslashes($sort), $categoryID, $SubCategoryID);
         if (!empty($products)) {
-            foreach ($products["products"] as &$product) {
+            foreach ($products["products"] as $index => &$product) {
                 $product->sell_price = $this->Product_Price_model->getLastPrice($product->product_id);
+                //TODO remove products if sell_price is zero
+//                if ($product->sell_price === 0) {
+//                    unset($products['products'][$index]);
+//                }
             }
         }
 
@@ -64,9 +68,31 @@ class Page extends My_Controller
 
     public function categories()
     {
+        $category_id = $this->input->get("c", true);
         $this->load->model("Category_model");
-        $categories = $this->Category_model->getCategories();
+        if (isset($category_id)) {
+            $categories = $this->Category_model->getSubCategories($category_id);
+        } else {
+            $categories = $this->Category_model->getCategories();
+        }
         $this->template(new ViewResponse("enduser", "Pages/categories", "دسته بندی ها", ["categories" => $categories]));
+    }
+
+    function subCategories($c_id = null)
+    {
+        if (!isset($c_id)) {
+            show_404();
+        }
+
+        $this->load->model("Category_model");
+        $category = $this->Category_model->getCategoryById($c_id);
+
+        $subCategories = $this->Category_model->getSubCategories($c_id);
+        if (empty($subCategories)) {
+            show_404();
+        }
+
+        $this->template(new ViewResponse("enduser", "Pages/subCategory", $category->title, ["subCategories" => $subCategories]));
     }
 
     public function category($catID = null)

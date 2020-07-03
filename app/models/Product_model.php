@@ -45,10 +45,10 @@ class Product_model extends CI_Model
     {
         $this->db->select("name,cover,user_id,$this->table.id as product_id,created_at");
 
-        if (isset($config["subCategoryId"], $config["categoryId"]) OR isset($config["categoryId"])) {
-            $condition = "AND category_id = {$config["categoryId"]}";
+        if (isset($config["categoryId"])) {
+            $condition = "AND category_id = '{$config["categoryId"]}'";
         } elseif (isset($config["subCategoryId"])) {
-            $condition = "AND subcategory_id = {$config["subCategoryId"]}";
+            $condition = "AND subcategory_id = '{$config["subCategoryId"]}'";
         } else {
             $condition = "";
         }
