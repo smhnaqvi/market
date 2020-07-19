@@ -5,7 +5,9 @@ class Page extends My_Controller
 {
     public function index()
     {
-        $this->template(new ViewResponse("enduser", "Pages/home", "", ""));
+        $this->load->model("Setting_model");
+        $response["slider"] = $this->Setting_model->getSetting("image", "slider", "home");
+        $this->template(new ViewResponse("enduser", "Pages/home", "", $response));
     }
 
     public function about()
@@ -65,7 +67,6 @@ class Page extends My_Controller
         $search = $this->input->get("search", true);
 
         $this->load->model(["Product_model", "Category_model", "Product_Price_model"]);
-
         $category = $this->Category_model->getCategoryById($categoryID);
         $products = $this->Product_model->getProducts(false, addslashes($search), addslashes($sort), $categoryID, $SubCategoryID);
         if (!empty($products)) {

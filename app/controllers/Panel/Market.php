@@ -57,7 +57,7 @@ class Market extends Main
         ));
 
         if ($insertingResult === false) {
-            $this->session->set_flashdata("error", "حطایی در اینجاد مغازه جدید بوجود آمده است");
+            $this->session->set_flashdata("error", "خطایی در اینجاد مغازه جدید بوجود آمده است");
         } else {
             $this->session->set_flashdata("success", "مغازه جدید با موفقیت اضافه شد.");
         }

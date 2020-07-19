@@ -39,7 +39,7 @@ class Order extends My_Controller
         }
 
         if ($userID === 0) {
-            $this->session->set_flashdata("error", "حطایی در ثبت کاربر بوجود آمده است");
+            $this->session->set_flashdata("error", "خطایی در ثبت کاربر بوجود آمده است");
             $this->redirectBackward();
         }
 
@@ -50,7 +50,7 @@ class Order extends My_Controller
         ));
 
         if ($orderID === 0) {
-            $this->session->set_flashdata("error", "حطایی در ثبت سفارش بوجود آمده است");
+            $this->session->set_flashdata("error", "خطایی در ثبت سفارش بوجود آمده است");
             $this->redirectBackward();
         }
 

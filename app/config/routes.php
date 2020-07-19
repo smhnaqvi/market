@@ -64,5 +64,10 @@ $route['panel/order/manage'] = 'Panel/Order/index';
 $route['panel/order/(:num)/delivered'] = 'Panel/Order/delivered/$1';
 
 
+/** setting */
+$route['panel/setting'] = 'Panel/Setting/index';
+$route['panel/setting/uploadNewSlide'] = 'Panel/Setting/uploadNewSlide';
+$route['panel/setting/removeSlide/(:num)'] = 'Panel/Setting/removeSlide/$1';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

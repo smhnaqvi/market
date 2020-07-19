@@ -17,7 +17,8 @@
 <div class="container-fluid">
     <div class="row">
         <nav class="d-md-none d-sm-block navbar navbar-dark bg-dark w-100">
-            <button class="nav-link navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample01" aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="nav-link navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample01"
+                    aria-controls="navbarsExample01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="fal fa-bars"></span>
             </button>
             <a class="nav-link navbar-toggler" href="<?= base_url("panel/logout") ?>">
@@ -89,6 +90,12 @@
                         <a class="nav-link" href="<?= base_url("panel/order/manage") ?>">
                             <span class="fal fa-shopping-basket"></span>
                             سفارشات
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url("panel/setting") ?>">
+                            <span class="fal fa-server"></span>
+                            تنظیمات
                         </a>
                     </li>
                 </ul>

@@ -1,4 +1,3 @@
-</div>
 <footer></footer>
 <script>
     const base_url = "<?= base_url() ?>";

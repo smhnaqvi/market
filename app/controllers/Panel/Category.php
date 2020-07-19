@@ -44,7 +44,7 @@ class Category extends Main
 
         $productCover = $this->uploadImage($fileInput, "category");
         if ($productCover === false) {
-            $this->session->set_flashdata("form_error", "حطایی در آپلود عکس بوجود آمده است");
+            $this->session->set_flashdata("form_error", "خطایی در آپلود عکس بوجود آمده است");
             $this->redirectBackward();
         }
 

@@ -62,7 +62,7 @@ class Product extends Main
 
         $productCover = $this->uploadImage($fileInput, "products");
         if ($productCover === false) {
-            $this->session->set_flashdata("form_error", "حطایی در آپلود عکس بوجود آمده است");
+            $this->session->set_flashdata("form_error", "خطایی در آپلود عکس بوجود آمده است");
             $this->redirectBackward();
         }
 

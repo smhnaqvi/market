@@ -8,7 +8,7 @@ class Upload_model extends CI_Model
         $this->load->library("upload");
     }
 
-    public function uploading($fileInput, $folder)
+    public function uploading($fileInput, $folder = null)
     {
         $dir = "upload/$folder";
 
@@ -33,8 +33,11 @@ class Upload_model extends CI_Model
         return false;
     }
 
-    public function removeCover($fileName, $from)
+    public function removeCover($fileName, $from = null)
     {
-        return unlink("upload/$from/$fileName");
+        if (isset($from)) {
+            $from .= "/";
+        }
+        return unlink("upload/$from$fileName");
     }
 }

@@ -20,7 +20,7 @@ class Main extends MY_Controller
     {
         $this->load->model('Product_model');
         $total_products = $this->Product_model->totalCount();
-        $response = array("total_active_products" => $total_products);
+        $response["total_active_products"] = $total_products;
         $data = new ViewResponse("panel", "home", 'داشبورد', $response);
         $this->template($data);
     }

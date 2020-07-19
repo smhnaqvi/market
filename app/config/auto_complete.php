@@ -52,16 +52,12 @@
  * @property Upload_model $Upload_model
  * @property Order_model $Order_model
  * @property Basket_model $Basket_model
+ * @property Setting_model $Setting_model
  */
 class CI_Controller
 {
 }
 
-class Website_Controller extends CI_Controller
-{
-}
-
-;
 
 /**
  * @property CI_DB_query_builder|CI_DB_postgre_driver $db              This is the platform-independent base Active Record implementation class.

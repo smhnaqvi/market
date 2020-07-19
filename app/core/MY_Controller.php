@@ -9,7 +9,7 @@ class MY_Controller extends CI_Controller
         parent::__construct();
     }
 
-    public function uploadImage($input, $folder)
+    public function uploadImage($input, $folder = null)
     {
         $fileInputName = $input;
         if (!isset($_FILES["$fileInputName"]) or $_FILES["$fileInputName"]["error"] !== 0) {
