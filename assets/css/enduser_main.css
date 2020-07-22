@@ -232,6 +232,7 @@ nav.menu {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     border-bottom: 1px solid rgba(125, 125, 125, 0.1);
     margin-bottom: 20px;
     padding: 0 20px;
@@ -240,7 +241,7 @@ nav.menu {
 }
 
 nav.menu div.links:nth-child(1) {
-    /*font-size: 15px;*/
+    font-size: 15px;
 }
 
 nav.menu div.links {
@@ -279,7 +280,7 @@ div.searchBox {
     bottom: 0;
     z-index: 10;
     width: 213px;
-    padding: 9px 0;
+    padding: 4px 0;
 }
 
 div.searchBox i {
@@ -413,7 +414,7 @@ div.product-item {
     position: relative;
     box-shadow: var(--main-box-shadow);
     padding: 5px;
-    /* height: inherit; */
+    background: white;
     border-radius: var(--main-border-radius);
     border: 1px solid rgba(0, 0, 0, .1);
 }
@@ -453,6 +454,7 @@ div.category-item {
     overflow: hidden;
     border: 1px solid rgba(0, 0, 0, .1);
     transition: var(--main-transition);
+    background: white;
 }
 
 div.category-item:hover {
@@ -507,6 +509,12 @@ img.category-cover {
     object-fit: contain;
 }
 
+div.sub-category-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-gap: .5rem;
+    align-items: start;
+}
 
 .sub-category {
     display: flex;
@@ -520,6 +528,10 @@ img.category-cover {
     border: 1px solid rgba(0, 0, 0, .1);
     color: var(--main-color);
     transition: var(--main-transition);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    background: white;
 }
 
 .sub-category:hover {
@@ -536,10 +548,12 @@ img.category-cover {
     overflow: hidden;
 }
 
-img.slider {
+div.slider {
     width: 100%;
     height: 300px;
-    object-fit: cover;
+    background-position: center !important;
+    background-repeat: no-repeat !important;;
+    background-size: cover !important;;
 }
 
 div.special-offer {
@@ -555,12 +569,35 @@ div.special-offer {
 
 div.special-offer img {
     width: 100%;
-    height: 200px;
+    height: 100%;
     object-fit: cover;
+    object-position: center;
 }
 
 @media only screen and (max-width: 600px) {
     div.product-info-2 {
         flex-direction: column;
+    }
+
+    #slider {
+        width: 100%;
+        height: 150px !important;
+        border-radius: var(--main-border-radius);
+        overflow: hidden;
+    }
+
+    div.special-offer {
+        background: white;
+        width: 100%;
+        height: 100px;
+        margin-top: 15px;
+        border-radius: var(--main-border-radius);
+        box-shadow: var(--main-box-shadow);
+        overflow: hidden;
+    }
+
+    nav.menu div.links:nth-child(1) {
+        font-size: 12px;
+        padding: 0 !important;
     }
 }

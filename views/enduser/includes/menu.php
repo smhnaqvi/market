@@ -3,7 +3,7 @@
         <a href="<?= base_url() ?>">خانه</a>
         <a href="<?= base_url() ?>categories">دسته بندی کالاها</a>
     </div>
-    <div class="links" style="margin-top: 8px">
+    <div class="links">
         <a href="#" class="fal fa-user"></a>
         <a href="<?= base_url('basket') ?>" class="fal fa-shopping-cart">
             <span class="basket-counter"></span>

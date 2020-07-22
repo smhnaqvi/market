@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="category-container col-12 card py-3">
+        <div class="category-container col-12 py-3">
             <?php foreach ($content["categories"] as $item) : ?>
                 <a class="w-100" href="<?= base_url("sub-categories/{$item->id}") ?>">
                     <div class="category-item">
